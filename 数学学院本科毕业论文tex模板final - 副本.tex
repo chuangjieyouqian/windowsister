@@ -1,0 +1,841 @@
+\documentclass[notitlepage,cs4size,punct,oneside]{ctexrep}
+\usepackage[a4paper,hmargin={2.54cm,2.54cm},vmargin={3.17cm,3.17cm}]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{ctex}
+\usepackage{titlesec}
+\numberwithin{equation}{chapter}
+\usepackage[runin]{abstract}
+\usepackage[pdfborder={0 0 0},colorlinks=true,linkcolor=blue,CJKbookmarks=true]{hyperref}
+\usepackage[numbers]{natbib}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\allowdisplaybreaks
+\setlength{\absleftindent}{1.5cm} \setlength{\absrightindent}{1.5cm}
+\setlength{\abstitleskip}{-\parindent}
+\setlength{\absparindent}{0cm}
+\newtheoremstyle{mystyle}{3pt}{3pt}{\kaishu}{0cm}{\heiti}{}{1em}{}
+\theoremstyle{mystyle}
+\newtheorem{definition}{\hspace{2em}定义}[chapter]
+% 如果没有章, 只有节, 把上面的[chapter]改成[section]
+\newtheorem{theorem}[definition]{\hspace{2em}定理}
+\newtheorem{axiom}[definition]{\hspace{2em}公理}
+\newtheorem{lemma}[definition]{\hspace{2em}引理}
+\newtheorem{proposition}[definition]{\hspace{2em}命题}
+\newtheorem{corollary}[definition]{\hspace{2em}推论}
+\newtheorem{remark}{\hspace{2em}注}[chapter]
+\def\theequation{\arabic{chapter}.\arabic{equation}}
+\def\thedefinition{\arabic{chapter}.\arabic{definition}.}
+\title{{\zihao{1}\heiti{} 一类非自治一阶拟线性双曲型方程组初边值问题的时间周期解}}
+\author{佟佳新\\学号：19300180043\\专业：数学与应用数学\\指导老师：肖体俊}
+\date{2023年5月15日}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%若要将章标题左对齐, 用下面这个语句替换相应的设置
+%\CTEXsetup[nameformat={\raggedright\zihao{3}\bfseries},%
+\CTEXsetup[nameformat={\zihao{3}\heiti},%
+    titleformat={\zihao{3}},%
+    beforeskip={0.8cm},afterskip={1.2cm}]{chapter}
+\CTEXsetup[nameformat={\zihao{4}\bfseries},%
+    titleformat={\zihao{4}},%
+    name={第~,~节},number={\arabic{section}},%
+    beforeskip={0.4cm},afterskip={0.4cm}]{section}
+\CTEXsetup[format={\zihao{-4}\bfseries},%
+    titleformat={\zihao{-4}},%
+    number={\arabic{section}.\arabic{subsection}.},%
+    beforeskip={0.4cm},afterskip={0.4cm}]{subsection}
+\CTEXoptions[abstractname={摘要：}]
+\CTEXoptions[bibname={\heiti 参考文献}]
+
+\renewcommand{\thepage}{\roman{page}}
+\setcounter{page}{1}
+\tableofcontents\clearpage
+
+\maketitle\renewcommand{\thepage}{\arabic{page}}
+\thispagestyle{empty}\setcounter{page}{0}
+%%%  论文的页码从正文开始计数, 摘要页不显示页码
+% 撰写论文的摘要
+\renewcommand{\abstractname}{摘要}
+\begin{abstract}
+    本文研究了一类非自治一阶拟线性双曲型方程组初边值问题的时间周期解,探讨了具耗散结构的时间周期边界条件下解的存在性和稳定性问题.同时,本文给出了所得结论在时间周期边界条件高频项的处理和模型建立中的误差项处理的应用举例.\\
+    \noindent{\heiti 关键字:} 时间周期解,非自治一阶拟线性双曲型方程组,时间周期耗散边界条件.
+\end{abstract}
+\renewcommand {\abstractname}{Abstract}
+\begin{abstract}
+    This paper discusses the existence and stability issues of time-periodic solutions for a class of non-autonomous first-order quasi-linear hyperbolic systems with boundary conditions possessing a certain dissipative structure. Application examples are also given for the processing of high-frequency terms in time-periodic boundary conditions and error terms in model establishment.\\
+    \noindent{\textbf{Keywords:}} Time-periodic solution，  Non-autonomous Quasilinear hyperbolic system，Time-periodic dissipative boundary condition.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%正文
+\chapter{引言}
+
+本文研究了一类非自治一阶拟线性双曲型方程组的初边值问题
+\begin{equation}\label{A1}
+    \partial_{t} u+A(t,x,u;\kappa) \partial_{x} u=\kappa F(t,x,u), \quad(t, x) \in \mathbb{R} \times[0, L].
+\end{equation}
+这里 $u=\left(u_{1}(t, x), \ldots, u_{n}(t, x)\right)^{T} \in C^{1}(\mathbb{R} \times[0, L] ; \mathcal{U})$ 是未知向量,区域 $\mathcal{U} \subset \mathbb{R}^{n}$ 是 $u=0$的一个小邻域.由双曲守恒方程的性质, $A(t,x,u;\kappa)=\left(a_{i j}(t,x,u;\kappa)\right)_{i, j=1}^{n}$  是 $\mathbb{R} \times[0, L] \times \mathcal{U}$上的一个光滑的矩阵值函数, 它具有 $n$ 个非零的实特征值 $\lambda_{i}(t,x,u;\kappa)(i=1, \ldots, n)$.我们假设
+\begin{align}
+    \lambda_{r}(t,x,u;\kappa) < 0 < \lambda_{s}(t,x,u;\kappa), \quad & \forall u \in \mathcal{U}, \forall (t,x) \in \mathbb{R} \times [0,L], \nonumber \\
+                                                                     & \forall r=1,\ldots,m,\ s=m+1,\ldots,n ,\label{A3}
+\end{align}
+并且$A(t,x,u;\kappa)$具有一组完备的左特征向量和右特征向量$l_{i}(t,x,u;\kappa)=\left(l_{i 1}(t,x,u;\kappa),  \right. $ $\left.\ldots,l_{i n}(t,x,u;\kappa)\right)$ 与 $r_{i}(t,x,u;\kappa)=\left(r_{1 i}(t,x,u;\kappa), \ldots, r_{n i}(t,x,u;\kappa)\right)^{T}$ $(i=1, \ldots, n)$, 即
+\begin{align}
+    l_{i}(t,x,u;\kappa)A(t,x,u;\kappa) & = \lambda_{i}(t,x,u;\kappa)l_{i}(t,x,u;\kappa), \nonumber                                                      \\
+                                       & \qquad \forall u \in \mathcal{U}, \forall (t,x) \in \mathbb{R} \times [0,L], \forall i=1, \ldots, n,\label{A4} \\
+    A(t,x,u;\kappa)r_{i}(t,x,u;\kappa) & = \lambda_{i}(t,x,u;\kappa)r_{i}(t,x,u;\kappa), \nonumber                                                      \\
+                                       & \qquad \forall u \in \mathcal{U}, \forall (t,x) \in \mathbb{R} \times [0,L], \forall i=1, \ldots, n,\label{A5}
+\end{align}
+满足
+\begin{equation}\label{A6}
+    \operatorname{det}\left(l_{i j}(t,x,u;\kappa)\right)_{i, j=1}^{n} \neq 0, \quad \forall u, \in \mathcal{U} ,\forall (t,x) \in \mathbb{R} \times [0,L].
+\end{equation}
+我们假设
+\begin{equation}\label{A6.5}
+    A(t,x,u;\kappa )=A^{*}(u) + \kappa \tilde{A}(t,x,u),
+\end{equation}
+其中对$A^{*}(u)$,令$u=Pv$后不妨设$A^{*}(0)=\operatorname{diag}\left\{\lambda_{i}^{*}(0)\right\}_{i=1}^{n} $,其中$P^{-1}A^{*}(0)P=\operatorname{diag}\left\{\lambda_{i}^{*}(0)\right\}_{i=1}^{n} $.对$F(t,x,u)$,我们假设
+\begin{equation}\label{A7}
+    F(t,x,0)=0.
+\end{equation}
+此外,我们假设所有的特征值 $\lambda_{i}(t, x, u; \kappa)$ 和特征向量 $l_{i}(t, x, u; \kappa)$, $r_{i}(t, x, u; \kappa) (i = 1, \ldots, n)$ 都是光滑的,关于 $\kappa$ 也是光滑的.并且不失一般性,我们假设
+\begin{equation}\label{A8}
+    l_{i}(t,x,u;\kappa )r_{j}(t,x,u;\kappa ) = \delta_{ij},  \quad \forall u \in \mathcal{U}, \forall (t,x) \in \mathbb{R} \times [0,L], \forall i,j=1,\ldots,n,
+\end{equation}
+\begin{equation}\label{A9}
+    | {r_{i}(t,x,u;\kappa )}|  = 1,  \quad \forall u \in \mathcal{U}, \forall (t,x) \in \mathbb{R} \times [0,L], \forall i=1,\ldots,n.
+\end{equation}
+这里 $\delta_{i j}$ 是 Kronecker符号, 因此
+\begin{equation}\label{A10}
+    l_{i}(t,x,0;0)=e_{i}^{T}, \quad r_{i}(t,x,0;0)=e_{i}, \quad \forall i=1, \ldots, n,
+\end{equation}
+其中 $e_{i}$ 是$\mathbb{R}^{n}$的第 $i$个单位向量, 即
+\begin{equation}\label{A11}
+    l_{i j}(t,x,0;0)=r_{i j}(t,x,0;0)=\delta_{i j}, \quad \forall i, j=1, \ldots, n .
+\end{equation}
+接下来在不引起歧义的情况下省略参数$\kappa $的引用.由 (\ref{A3}), 我们可以进一步令
+\begin{equation}\label{A12}
+    \mu_{i}(t,x,u)=\lambda_{i}^{-1}(t,x,u), \quad i=1, \ldots, n,
+\end{equation}
+记
+\begin{equation}\label{A13}
+    \mu_{\max }=\max _{i=1, \ldots, n} \sup _{u \in \mathcal{U}}\left|\mu_{i}(t,x,u)\right|,
+\end{equation}
+通过重新调整时间变量,我们可以假设
+\begin{equation}\label{A14}
+    \mu_{\max } \leq 1.
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+对于方程 (\ref{A1}), 我们考虑它的 $C^{1}$ 初边值问题的经典解,其初值为
+\begin{equation}\label{A15}
+    t=0: u(0, x)=\varphi(x), \quad x \in[0, L],
+\end{equation}
+边界条件为
+\begin{align}
+    x=0: u_{s} & =G_{s}\left(h_{s}(t), u_{1}, \ldots, u_{m}\right),   &  & s=m+1, \ldots, n, \label{A16} \\
+    x=L: u_{r} & =G_{r}\left(h_{r}(t), u_{m+1}, \ldots, u_{n}\right), &  & r=1, \ldots, m,\label{A17}
+\end{align}
+其中 $G_{s}\left(h_{s}, u_{1}, \ldots, u_{m}\right)(s=m+1, \ldots, n)$ 与 $G_{r}\left(h_{r}, u_{m+1}, \ldots, u_{n}\right)(r=1, \ldots, m)$ 是光滑函数 ,满足
+\begin{align}
+    G_{s}(0,0, \ldots, 0) & =0, &  & s=m+1, \ldots, n, \label{A18} \\
+    G_{r}(0,0, \ldots, 0) & =0, &  & r=1, \ldots, m .\label{A19}
+\end{align}
+$\varphi(x)$ 和 $h_{i}(t) (i = 1, \ldots, n)$ 是 $C^{1}$ 光滑函数,它们在 $(t, x) = (0, 0)$ 和 $(0, L)$ 处满足一定的 $C^{1}$ 相容性条件.通过重新定义 $h_{i}(t)$,我们可以进一步假设
+\begin{equation}\label{A20}
+    \max _{r=1, \ldots, m}\left|\frac{\partial G_{r}}{\partial h_{r}}(0, \ldots, 0)\right| \leq 1, \max _{s=m+1, \ldots, n}\left|\frac{\partial G_{s}}{\partial h_{s}}(0, \ldots, 0)\right| \leq 1.
+\end{equation}
+
+在接下来的内容中,我们总是假设 (\ref{A3})--(\ref{A10}),(\ref{A14}) 以及 (\ref{A18})--(\ref{A20}) 成立.我们可以根据 \cite{15} 证明相应的$C^{1}$经典解的局部存在性.本文将讨论时间周期条件的情况.我们假设 $A(t, x, u)$,$F(t, x, u)$ 以及所有 $h_{i}(t) (i = 1, \ldots, n)$ 都是以$T_{*} > 0$为时间周期的周期函数 ,即
+\begin{equation}\label{A21}
+    h_{i}\left(t+T_{*}\right)=h_{i}(t), \quad \forall t \in \mathbb{R}, \forall i=1, \ldots, n,
+\end{equation}
+\begin{equation}\label{A22}
+    A(t+T_{*},x,u)=A(t,x,u), \quad \forall t \in \mathbb{R}, \forall x \in [0,L],u \in \mathcal{U},
+\end{equation}
+\begin{equation}\label{A23}
+    F(t+T_{*},x,u)=F(t,x,u), \quad \forall t \in \mathbb{R}, \forall x \in [0,L],u \in \mathcal{U}.
+\end{equation}
+
+在这种情况下,$u \equiv 0$通常不是系统的平衡态.因此,我们很自然地猜测该系统可能存在时间周期解.请参见文献 \cite{22} 中的实例.双曲系统的时间周期解在共振现象分析中也具有重要意义,如文献 \cite{17, 19} 所示.在满足一定条件的情况下,我们将首先证明时间周期解的存在性,接着证明其渐近稳定性.换言之,对于具有相同边界条件但初始数据不同的所有其他小解系统,它们将渐近地收敛于时间周期解.
+
+通常情况下,由于系统的非线性,如果边界条件没有耗散,初边值问题(\ref{A1})和(\ref{A15})--(\ref{A17})的经典解在有限时间内可能会爆破,即使初值和边界值较小且光滑.请参见\cite{14}中的示例.为了讨论$ C^{1} $经典解,我们需要具有一定耗散结构的边界条件.在本文中,我们将采用\cite{18} 和\cite{23}中提供的方法,详见\cite{14} 的第5章.
+
+注意到由于时间的周期性,$\tilde{A}(t,x,u)$是有界的,定义
+\begin{equation}\label{A24}
+    \Theta=(\theta _{i j})_{i,j=1} ^{n}\overset{\text{def.}}{=}
+    \left(
+    \begin{array}{cc}
+            0 & \left( \frac{\partial G_r}{\partial t_s}(0,0,\dots,0)\substack{ r=1,\dots,m \\ s=m+1,\dots,n} \right) \\
+            \left( \frac{\partial G_s}{\partial t_r}(0,0,\dots,0)\substack{ r=1,\dots,m     \\ s=m+1,\dots,n} \right) & 0 \\
+        \end{array}
+    \right),
+\end{equation}
+对于矩阵$\Theta$,我们定义它的最小特征值为
+\begin{equation}\label{A25}
+    \theta=\|\Theta\|_{\min }=\inf _{\substack{\Gamma=\operatorname{diag}\left\{\gamma_{i}\right\}_{i=1}^{n} \\ \gamma_{i} \neq 0}}\left\|\Gamma \Theta \Gamma^{-1}\right\|,
+\end{equation}
+其中
+\begin{equation}\label{A26}
+    \|\Theta\|=\max _{i=1, \ldots, n} \sum_{j=1}^{n}\left|\theta_{i j}\right|,
+\end{equation}
+在本文中, 我们要求
+\begin{equation}\label{A27}
+    \theta<1.
+\end{equation}
+
+在这种耗散结构下,双曲系统对应的边界稳定性结果可以参见文献\cite{1}-- \cite{11}, \cite{13}, \cite{16} ,而在能控性问题中的应用可参见\cite{20} .另一方面,对于 $h_{i}(t)(i = 1, ..., n)$呈周期性的情况,如式(\ref{A21})所示,关于解的渐近性状态的研究文献相对较少.\cite{22} 在经典解或熵解的框架下讨论了超音速等熵欧拉流问题.值得注意的是,由于超音速假设,该问题属于特殊情况$\theta  = 0$,并且仅在区域的一侧具有边界条件.近年的相关研究见\cite{24,25}.在本文中,我们将在更一般的要求(\ref{A27})下研究时间周期边界条件,但仍然基于经典解的框架.
+
+根据\cite{14,18,23}中给出的结果,在$\kappa =0$时,在假设 (\ref{A27})下, 存在一个常数 $\varepsilon_{0}>0$, 使得对于任意给定的常数 $\varepsilon \in\left(0, \varepsilon_{0}\right)$ 和 任意给定的函数 $\varphi$ 和 $h_{i}(i=1, \ldots, n)$ 满足
+\begin{equation}
+    \begin{aligned}
+        \|\varphi\|_{C^{1}} & \leq \varepsilon,  \label{A28}
+    \end{aligned}
+\end{equation}
+\begin{equation}
+    \begin{aligned}
+        \max _{i=1, \ldots, n}\left\|h_{i}\right\|_{C^{1}} & \leq \varepsilon, \label{A29}
+    \end{aligned}
+\end{equation}
+初边值问题(\ref{A1}) 和 (\ref{A15})--(\ref{A17})在 $(t, x) \in \mathbb{R}_{+} \times[0, L]$ 上 存在一个全局$C^{1}$ 经典解 $u=u(t, x)$ .
+
+我们的第一个结果是时间周期解的存在性.
+\begin{theorem}\label{T1} (时间周期解的存在性)在假设(\ref{A27})下, 存在常数$\varepsilon_{1} > 0$ , $C_{P}>0$ , $\kappa >0$, 对于任意给定的 $\varepsilon \in \left( 0, \varepsilon_{1} \right) $, 任意给定的 $T_{*} \in \mathbb{R}_{+}$, 以及任意给定的函数 $h_{i}(t)(i=1, \ldots, n)$满足(\ref{A21}) 和 (\ref{A29}), 存在一个$C^{1}$ 光滑函数 $\varphi=\varphi^{(P)}(x)$ 满足
+    \begin{equation}\label{A30}
+        \|\varphi\|_{C^{1}} \leq C_{P} \varepsilon,
+    \end{equation}
+    使得初边值问题(\ref{A1}) 和 (\ref{A15})--(\ref{A17})在$(t, x) \in \mathbb{R} \times[0, L]$上存在一个$C^{1}$ 经典解 $u=$ $u^{(P)}(t, x)$, 满足
+    \begin{equation}\label{A31}
+        u^{(P)}\left(t+T_{*}, x\right)=u^{(P)}(t, x), \quad \forall(t, x) \in \mathbb{R} \times[0, L] .
+    \end{equation}
+\end{theorem}
+
+此外,我们还进一步得到了该时间周期解的渐近稳定性,这也证明了具有一般小初值的解的长时间行为.
+
+\begin{theorem}\label{T2} (时间周期解的稳定性)在假设(\ref{A27})下, 存在常数 $\varepsilon_{2} \in\left(0, \varepsilon_{1}\right)$, $C_{S}>0$, $\kappa>0 $,使得对于任意给定的 $\varepsilon \in\left(0, \varepsilon_{2}\right)$, 任意给定的 $T_{*} \in \mathbb{R}_{+}$, 和任意给定的 $\varphi(x)$ 和 $h_{i}(t)(i=1, \ldots, n)$ 满足(\ref{A21}) 和 (\ref{A28})--(\ref{A29})和一定的相容性条件, 初边值问题(\ref{A1}) 和 (\ref{A15})--(\ref{A17})在$(t, x) \in \mathbb{R}_{+} \times[0, L]$上有唯一的$C^{1}$全局经典解$u=u(t, x)$, 满足
+    \begin{equation}\label{A32}
+        \left\|u(t, \cdot)-u^{(P)}(t, \cdot)\right\|_{C^{0}} \leq C_{S} \alpha^{\left[t / T_{0}\right]} \varepsilon, \quad \forall t \in \mathbb{R}_{+},
+    \end{equation}
+    其中 $u^{(P)}$取决于 $h_{i}(t)(i=1, \ldots, n)$, 是由定理\ref{T1}所给出的时间周期解,这里
+    \begin{align}
+        \alpha & = \frac{2 + \theta}{3} \in (0, 1), \label{A33}                                                                           \\
+        T_{0}  & = \max_{1 \leq i \leq n} \sup_{u \in \mathcal{U}} \frac{L}{\left|\lambda_{i}(t, x, u)\right|} = L \mu_{\max}.\label{A34}
+    \end{align}
+\end{theorem}
+令 $t \rightarrow+\infty$, 这个结果直接显示了时间周期解的唯一性.
+
+\begin{corollary}\label{P3}(时间周期解的唯一性)在假设(\ref{A27})下, 存在常数 $\varepsilon_{3} \in\left(0, \varepsilon_{2}\right)$与$\kappa >0 $, 使得对于任意给定的 $\varepsilon \in \left( 0, \varepsilon_{3} \right) $, 任意给定的 $T_{*} \in \mathbb{R}_{+}$,以及任意给定的函数 $h_{i}(t)(i=$ $1, \ldots, n)$满足(\ref{A21}) 和 (\ref{A29}), 相应的时间周期解 $u=u^{(P)}(t, x)$ 是唯一的.
+\end{corollary}
+我们可以从另一个角度考虑边界稳定性问题.如\cite{14, 18, 23} 和\cite{1}-- \cite{11}, \cite{13}, \cite{16}的讨论,当$h_i(t) \equiv 0$ ($i = 1, ..., n $)  时,边界条件(\ref{A16})--(\ref{A17})可以作为反馈边界控制.当满足耗散结构要求(\ref{A27})时,该反馈控制可以使系统在$ u = 0$ 附近保持稳定.在本文中,我们将研究这种稳定性质在更一般情况下的表现,即所有的 $h_i(t)(i = 1, ..., n)$是周期性光滑函数,满足(\ref{A21}).此时,在满足(\ref{A27})的反馈边界 控制下, 定理\ref{T2}表明系统仍能在相应的时间周期解附近保持稳定.
+
+\chapter{时间周期解的存在性}
+
+首先,我们应用了\cite{15} 中的线性化方法,详见\cite{12} .在本章中,我们将使用一种迭代方法来构造定理\ref{T1}的时间周期解.方程 (\ref{A1})左乘左特征向量 $l_{i}(t,x,u)(i=1, \ldots, n)$ ,我们得到
+\begin{align}
+    \partial_{t} u_{i}+\lambda_{i}(t,x,u) \partial_{x} u_{i} & = \sum_{j=1}^{n} B_{i j}(t,x,u)\left(\partial_{t} u_{j}+\lambda_{i}(t,x,u) \partial_{x} u_{j}\right)\nonumber \\
+                                                             & +\kappa \sum_{j=1}^{n}C_{i j}(t,x,u) F_j(t,x,u), \quad i=1, \ldots, n .\label{B1}
+\end{align}
+其中
+\begin{equation}\label{B2}
+    B_{i j}(t,x,u)=\left\{\begin{array}{cc}
+        -\frac{l_{i j}(t,x,u)}{l_{i i}(t,x,u)}, & i \neq j, \\
+        0,                                      & i=j,
+    \end{array}\right.
+\end{equation}
+\begin{equation}\label{B3}
+    C_{i j}(t,x,u)=\left\{\begin{array}{cc}
+        \frac{l_{i j}(t,x,u)}{l_{i i}(t,x,u)}, & i \neq j, \\
+        1,                                     & i=j.
+    \end{array}\right.
+\end{equation}
+由(\ref{A7}), (\ref{A11}), 我们得到,
+\begin{align}
+    \partial _{t} F_{i j}(t,x,0)       & =\partial _{x} F_{i j}(t,x,0)=0, \label{B4.2}                                       \\
+    B_{i j}(t,x,0;0)                   & =0, \label{B4}                                                                      \\
+    \partial _{t} B_{i j}(t,x,u;0)     & =\partial _{x} B_{i j}(t,x,u;0)=0, \label{B4.1}                                     \\
+    \partial _{t} \lambda_{i}(t,x,u;0) & =\partial _{x} \lambda_{i}(t,x,u;0)=0, \quad \forall i, j=1, \ldots, n.\label{B4.3}
+\end{align}
+因此,我们可以将线性化系统的迭代形式写为
+\begin{align}
+    \label{B5}
+    \partial_{t} u_{i}^{(k)}+\lambda_{i}(t,x,u^{(k-1)}) \partial_{x} u_{i}^{(k)}
+                          & = \sum_{j=1}^{n} B_{i j}(t,x,u^{(k-1)})\left(\partial_{t} u_{j}^{(k-1)}+\lambda_{i}(t,x,u^{(k-1)}) \partial_{x} u_{j}^{(k-1)}\right)\nonumber \\
+                          & + \kappa  \sum_{j=1}^{n}C_{i j}(t,x,u^{(k-1)}) F_j(t,x,u^{(k-1)}), \quad i=1, \ldots, n.                                                      \\
+    x=0:\quad u_{s}^{(k)} & =G_{s}(h_{s}(t), u_{1}^{(k-1)}, \ldots, u_{m}^{(k-1)}), \quad s=m+1, \ldots, n.  \label{B6}                                                   \\
+    x=L:\quad u_{r}^{(k)} & =G_{r}(h_{r}(t), u_{m+1}^{(k-1)}, \ldots, u_{n}^{(k-1)}), \quad r=1, \ldots, m. \label{B7}
+\end{align}
+迭代起点取为
+\begin{equation}\label{B8}
+    u^{(0)}(t, x) \equiv 0.
+\end{equation}
+对于这个线性化系统 (\ref{B5})--(\ref{B7}), 迭代起点取为(\ref{B8}), 我们将证明以下的先验估计.
+\begin{proposition}\label{P1}对于迭代过程 (\ref{B5})--(\ref{B7}), 在假设(\ref{A27})下, 对于足够小的 $\varepsilon_{1}>0$与足够小的$\kappa >0$和足够大的$C_{P}>0$, 系统(\ref{B5})--(\ref{B7}) 的这列$C^{1}$解 $u_{i}^{(k)}(t, x)\left(i=1, \ldots, n; \right.$ $\left.k \in \mathbb{Z}_{+}\right)$满足
+    \begin{gather}
+        u^{(k)}\left(t+T_{*}, x\right)=u^{(k)}(t, x), \quad \forall(t, x) \in \mathbb{R} \times[0, L], \forall k \in \mathbb{Z}_{+}, \label{B9}\\
+        \left\|u^{(k)}\right\|_{C^{1}} \stackrel{\text { def. }}{=} \max _{i=1, \ldots, n}\left\{\left\|u_{i}^{(k)}\right\|_{C^{0}},\left\|\partial_{t} u_{i}^{(k)}\right\|_{C^{0}},\left\|\partial_{x} u_{i}^{(k)}\right\|_{C^{0}}\right\} \leq C_{P} \varepsilon, \quad \forall k \in \mathbb{Z}_{+}, \label{B10} \\
+        \left\|u^{(k)}-u^{(k-1)}\right\|_{C^{0}} \leq C_{P} \varepsilon \alpha^{k}, \quad \forall k \in \mathbb{Z}_{+} ,\label{B11}
+    \end{gather}
+    和
+    \begin{equation}\label{B12}
+        \max _{i=1, \ldots, n}\left\{\omega\left(\eta \mid \partial_{t} u_{i}^{(k)}\right)+\omega\left(\eta \mid \partial_{x} u_{i}^{(k)}\right)\right\} \leq \Omega_{P}(\eta), \quad \forall k \in \mathbb{Z}_{+}
+    \end{equation}
+\end{proposition}
+这里 $\alpha$是由 $(\ref{A33})$定义的常数, $\omega(\eta \mid \cdot)$ 是连续模:
+\begin{equation}\label{B13}
+    \omega(\eta \mid f)=\sup _{\substack{\left|t_{1}-t_{2}\right| \leq \eta \\\left|x_{1}-x_{2}\right| \leq \eta}}\left|f\left(t_{1}, x_{1}\right)-f\left(t_{2}, x_{2}\right)\right|,
+\end{equation}
+$\Omega_{P}(\eta)$ 是 $\eta \in(0,1)$上的连续函数, 不依赖于$k$, 稍后再确定,满足
+\begin{equation}\label{B14}
+    \lim _{\eta \rightarrow 0+} \Omega_{P}(\eta)=0.
+\end{equation}
+
+与在\cite{15}中类似,一旦我们证明了命题\ref{P1}, 我们就可以直接证明定理\ref{T1}.由(\ref{B11}),  $\left\{u^{(k)}\right\}_{k=1}^{\infty}$ 是 $C^{0}$ 函数空间的是的柯西序列, 从而一致收敛于某个 $C^{0}$ 函数 $u^{(P)}$ . 又由(\ref{B9}), 此 $u^{(P)}$ 是时间周期的. 然后由 (\ref{B10}) 和 (\ref{B12}), 应用Arzelà-Ascoli引理,我们知道存在一个子序列 $\left\{u^{(k)}\right\}$,在$C^{1}$函数空间中一致收敛.因此$u^{(P)}$ 是 $C^{1}$光滑的,并且是问题 (\ref{A1}) 和 (\ref{A16})--(\ref{A17})的经典解, 然后我们可以取$\varphi^{(P)}(x)=u^{(P)}(0, x)$ 得到初始值, 由于(\ref{B10})这明显满足(\ref{A28}).
+
+在本章的下一部分中, 我们将递归地建立命题\ref{P1}的先验估计 (\ref{B9})--(\ref{B12}) , 即对于每个 $k \in \mathbb{Z}_{+}$, 我们将证明
+\begin{gather}
+    u_{i}^{(k)}\left(t+T_{*}, x\right)=u_{i}^{(k)}(t, x), \quad \forall(t, x) \in \mathbb{R} \times[0, L], \forall i=1, \ldots, n, \label{B15} \\
+    \max _{i=1, \ldots, n}\left\|u_{i}^{(k)}\right\|_{C^{1}} \leq C_{P} \varepsilon, \label{B16}\\
+    \max _{i=1, \ldots, n}\left\|u_{i}^{(k)}-u_{i}^{(k-1)}\right\|_{C^{0}} \leq C_{P} \varepsilon \alpha^{k}, \label{B17}\\
+    \max _{i=1, \ldots, n} \omega\left(\eta \mid \partial_{t} u_{i}^{(k)}(\cdot, x)\right) \leq \frac{1}{8} \Omega_{P}(\eta), \quad \forall x \in[0, L] \label{B18},
+\end{gather}
+和
+\begin{equation}\label{B19}
+    \max _{i=1, \ldots, n}\left\{\omega\left(\eta \mid \partial_{t} u_{i}^{(k)}\right)+\omega\left(\eta \mid \partial_{x} u_{i}^{(k)}\right)\right\} \leq \Omega_{P}(\eta),
+\end{equation}
+归纳假设如下
+\begin{gather}
+    u_{i}^{(k-1)}\left(t+T_{*}, x\right)=u_{i}^{(k-1)}(t, x), \quad \forall(t, x) \in \mathbb{R} \times[0, L], \forall i=1, \ldots, n, \label{B20} \\
+    \max _{i=1, \ldots, n}\left\|u_{i}^{(k-1)}\right\|_{C^{1}} \leq C_{P} \varepsilon,  \label{B21} \\
+    \max _{i=1, \ldots, n}\left\|u_{i}^{(k-1)}-u_{i}^{(k-2)}\right\|_{C^{0}} \leq C_{P} \varepsilon \alpha^{k-1}, \quad(\text { 对 } k \geq 2)  \label{B22} \\
+    \max _{i=1, \ldots, n} \omega\left(\eta \mid \partial_{t} u_{i}^{(k-1)}(\cdot, x)\right) \leq \frac{1}{8} \Omega_{P}(\eta), \quad \forall x \in[0, L] ,\label{B23}
+\end{gather}
+和
+\begin{equation} \label{B24}
+    \max _{i=1, \ldots, n}\left\{\omega\left(\eta \mid \partial_{t} u_{i}^{(k-1)}\right)+\omega\left(\eta \mid \partial_{x} u_{i}^{(k-1)}\right)\right\} \leq \Omega_{P}(\eta).
+\end{equation}
+这里
+\begin{equation} \label{B25}
+    \omega(\eta \mid f(\cdot, x))=\max _{\left|t_{1}-t_{2}\right| \leq \eta}\left|f\left(t_{1}, x\right)-f\left(t_{2}, x\right)\right| .
+\end{equation}
+
+由于 $(\ref{B21})$, 对于小量 $\varepsilon_{1}$我们有 $u^{(k-1)} \in \mathcal{U}$ , 这保证了我们的假设(\ref{A3})--(\ref{A9}) 和 (\ref{A14})成立.以(\ref{B8})作为迭代起点, $u_{i}^{(0)}(i=1, \ldots, n)$ 自然满足(\ref{B20})--(\ref{B21}) 和 (\ref{B23})--(\ref{B24}).
+
+在下面的证明中, 我们需要$(0, \alpha)$中的一系列常数. 根据定义 (\ref{A25}), 经过线性变换
+\begin{equation} \label{B26}
+    \tilde{u}=\Gamma u,
+\end{equation}
+我们可以不失一般性地假设
+\begin{equation} \label{B27}
+    \|\Theta\|=\|\Theta\|_{\min }=\theta<1,
+\end{equation}
+对于足够小的 $\varepsilon_{1}>0$, 注意 $\alpha$的定义 (\ref{A33}), 我们可以令
+\begin{align}
+    \alpha_{0}=\max \left\{\frac{1}{3}, \max _{r=1, \ldots, m} \sup _{\left|h_{r}\right| \leq \varepsilon} \sup _{u \in \mathcal{U}} \sum_{s=m+1}^{n}\left|\frac{\partial G_{r}}{\partial u_{s}}\left(h_{r}, u_{m+1}, \ldots, u_{n}\right)\right|\right. ,  \nonumber \\
+    \left.\max _{s=m+1, \ldots, n} \sup _{\left|h_{s}\right| \leq \varepsilon} \sup _{u \in \mathcal{U}} \sum_{r=1}^{m}\left|\frac{\partial G_{s}}{\partial u_{r}}\left(h_{s}, u_{1}, \ldots, u_{n}\right)\right|\right\} \in\left[\frac{1}{3}, \alpha\right),\label{B28}
+\end{align}
+对于任意的 $\ell \in \mathbb{Z}_{+}$,令
+\begin{equation} \label{B29}
+    \alpha_{\ell}=\frac{2^{\ell}-1+\left(2^{\ell}+1\right) \alpha_{0}}{2^{\ell+1}}=\alpha_{\ell-1}+\frac{1-\alpha_{0}}{2^{\ell+1}},
+\end{equation}
+很容易得到
+\begin{equation} \label{B30}
+    0<\alpha_{\ell}<\alpha_{\ell+1}<\frac{1+\alpha_{0}}{2}<\alpha<1, \quad \forall \ell \in \mathbb{N}.
+\end{equation}
+
+接下来,为了简化我们的分析,我们将$\mu_{i}\left(t,x,u^{(k-1)}\right)=\lambda_{i}^{-1}\left(t,x,u^{(k-1)}\right)$ 乘到(\ref{B5})的第 $i$个方程, 记$\mu_{r}^{(k-1)}=\mu_{r}\left( t,x,u^{(k-1)} \right)$,其余项同理,交换$t$ 和 $x$的地位得到
+\begin{align}
+     & \partial_{x} u_{r}^{(k)}+\mu_{r}^{(k-1)} \partial_{t} u_{r}^{(k)}=\sum_{j=1}^{n} B_{r j}^{(k-1)}\left(\partial_{x}+\mu_{r}^{(k-1)} \partial_{t}\right) u_{j}^{(k-1)} + \kappa \sum_{j=1}^{n}\mu_{r}^{(k-1)} C_{r j}^{(k-1)} F_j^{(k-1)},\nonumber \\& r=1, \ldots, m  \label{B31} \\
+     & x=L: u_{r}^{(k)}=G_{r}\left(h_{r}(t), u_{m+1}^{(k-1)}, \ldots, u_{n}^{(k-1)}\right), \quad r=1, \ldots, m  \label{B32}                                                                                                                            \\
+     & \partial_{x} u_{s}^{(k)}+\mu_{s}^{(k-1)} \partial_{t} u_{s}^{(k)}=\sum_{j=1}^{n} B_{s j}^{(k-1)}\left(\partial_{x}+\mu_{s}^{(k-1)} \partial_{t}\right) u_{j}^{(k-1)} + \kappa \sum_{j=1}^{n}\mu_{s}^{(k-1)} C_{s j}^{(k-1)} F_j^{(k-1)},\nonumber \\& s=m+1, \ldots, n,  \label{B33} \\
+     & x=0: u_{s}^{(k)}=G_{s}\left(h_{s}(t), u_{1}^{(k-1)}, \ldots, u_{m}^{(k-1)}\right), \quad s=m+1, \ldots, n . \label{B34}
+\end{align}
+
+系统(\ref{B31})--(\ref{B34})的优点是,在交换$t$ 和 $x$的位置后, 我们可以将线性化的时间周期边界条件(\ref{B6})--(\ref{B7}) 看作周期初始条件 (\ref{B32}) 和 (\ref{B34}), 线性化的系统在每次迭代中解耦.
+此外,由于我们改变了$t$ 和 $x$的作用, 我们可以定义特征曲线 $t=$ $t_{i}^{(k)}\left(x ; t_{*}, x_{*}\right)$ :
+\begin{equation} \label{B35}
+    \left\{\begin{aligned}
+        \frac{\mathrm{d} t_{i}^{(k)}}{\mathrm{d} x}\left(x ; t_{*}, x_{*}\right) & =\mu_{i}\left(t,x,u^{(k-1)}\left(t_{i}^{(k)}\left(x ; t_{*}, x_{*}\right), x\right)\right), \\
+        t_{i}^{(k)}\left(x_{*} ; t_{*}, x_{*}\right)                             & =t_{*} .
+    \end{aligned}\right.
+\end{equation}
+
+现在,我们将逐一证明 (\ref{B15})--(\ref{B19}).首先,由 (\ref{B20}),我们知道,如果 $u_{i}^{(k)}(t, x) (i = 1, \ldots, n)$ 是 (\ref{B31})--(\ref{B32}) 的解,那么 $u_{i}^{(k)}\left(t + T_{*}, x\right) (i = 1, \ldots, n)$ 也是.因此,根据这个线性系统的唯一性,我们得到 (\ref{B15}).
+
+接下来,为了得到 (\ref{B16}) 的 $C^{0}$ 估计,我们首先在边界上进行估计.由 (\ref{B32}),在边界 $x = L$ 上应用 Hadamard 公式,由 (\ref{A19})
+\begin{align}
+    u_{r}^{(k)}(t, L) & =h_{r}(t) \int_{0}^{1} \frac{\partial G_{r}}{\partial h_{r}}\left(\gamma h_{r}(t), \gamma u_{m+1}^{(k-1)}(t, L), \ldots, \gamma u_{n}^{(k-1)}(t, L)\right) \mathrm{d} \gamma \nonumber                                    \\
+                      & \quad  +\sum_{s=m+1}^{n} u_{s}^{(k-1)}(t, L) \int_{0}^{1} \frac{\partial G_{r}}{\partial v_{s}}\left(\gamma h_{r}(t), \gamma u_{m+1}^{(k-1)}(t, L), \ldots, \gamma u_{n}^{(k-1)}(t, L)\right) \mathrm{d} \gamma,\nonumber \\&  r=1, \ldots, m . \label{B36}
+\end{align}
+因此,由 (\ref{A20}), (\ref{A27}), (\ref{A29}) 和 (\ref{B21}), 对于足够大的 $C_{P}$ 和足够小的$\varepsilon_{1}>0$, 我们可以得到
+\begin{equation} \label{B37}
+    \sup _{t}\left|u_{r}^{(k)}(t, L)\right| \leq \varepsilon(1+C \varepsilon)+C_{P} \alpha_{0} \varepsilon \leq \alpha_{1} C_{P} \varepsilon, \quad r=1, \ldots, m.
+\end{equation}
+同样地,在$x=0$上我们有
+\begin{equation} \label{B38}
+    \sup _{t}\left|u_{s}^{(k)}(t, 0)\right| \leq \alpha_{1} C_{P} \varepsilon, \quad s=m+1, \ldots, n.
+\end{equation}
+接下来,我们沿着特征曲线$t=t_{r}^{(k)}\left(x ; t_{*}, L\right)$ 对(\ref{B31}) 积分
+\begin{align}
+    & u_{r}^{(k)}\left(t_{r}^{(k)}\left(x ; t_{*}, L\right), x\right)  =u_{r}^{(k)}\left(t_{*}, L\right) \nonumber                                                                                                                                                                     \\
+                & +\int_{L}^{x}\left(\sum_{j=1}^{n} B_{r j}\left(t_{r}^{(k)}, y,u^{(k-1)}\right) \cdot\left(\partial_{x}+\mu_{r}\left(t_{r}^{(k)},y,u^{(k-1)}\right) \partial_{t}\right) u_{j}^{(k-1)}\right)\left(t_{r}^{(k)}\left(y ; t_{*}, L\right), y\right)\mathrm{d} y \nonumber \\
+                & +\kappa \int_{L}^{x}\left(\sum _{j=1}^{n} \mu_{r}\left(t_{r}^{(k)}, y,u^{(k-1)}\right) C_{r j}(t_{r}^{(k)}, y,u^{(k-1)}) F_j(t_{r}^{(k)}, y,u^{(k-1)}) \right) \left(t_{r}^{(k)}\left(y ; t_{*}, L\right), y\right)\mathrm{d} y,\nonumber                             \\
+                & r=1, \ldots, m .\label{B39}
+\end{align}
+由于(\ref{B4}),(\ref{B31}) 和 (\ref{B37}),
+\begin{equation} \label{B40}
+    \left\|u_{r}^{(k)}\right\|_{C^{0}} \leq \alpha_{1} C_{P} \varepsilon+C\left(C_{P} \varepsilon\right)^{2} + \kappa CC_{P} \varepsilon \leq \alpha_{2} C_{P} \varepsilon, \quad \forall r=1, \ldots, m.
+\end{equation}
+沿着$t=t_{s}^{(k)}\left(x ; t_{*}, 0\right)$ 对(\ref{B33}) 积分得到
+\begin{equation} \label{B41}
+    \left\|u_{s}^{(k)}\right\|_{C^{0}} \leq \alpha_{2} C_{P} \varepsilon, \quad \forall s=m+1, \ldots, n .
+\end{equation}
+结合(\ref{B40}) 和 (\ref{B40})就得到了(\ref{B16})中的 $C^{0}$范数估计.
+
+为了得到$u_{i}^{(k)}(i=1, \ldots, n)$的时间导数的估计, 我们令
+\begin{equation} \label{B42}
+    z_{i}^{(k)}=\partial_{t} u_{i}^{(k)}, \quad i=1, \ldots, n ; k \in \mathbb{N} .
+\end{equation}
+对于 $k \in \mathbb{Z}_{+}$, 对边界条件(\ref{B32}) 和 (\ref{B34})对时间求导, 在$x=L$上
+\begin{align}
+    z_{r}^{(k)}(t, L)= & h_{r}^{\prime}(t) \frac{\partial G_{r}}{\partial h_{r}} \left(h_{r}(t), u_{m+1}^{(k-1)}(t, L), \ldots, u_{n}^{(k-1)}(t, L)\right)\nonumber                     \\
+                       & +\sum_{s=m+1}^{n} z_{s}^{(k-1)}(t, L) \frac{\partial G_{r}}{\partial u_{s}}\left(h_{r}(t), u_{m+1}^{(k-1)}(t, L), \ldots, u_{n}^{(k-1)}(t, L)\right),\nonumber \\
+                       & \quad \forall r=1, \ldots, m. \label{B43}
+\end{align}
+在$x=0$上,
+\begin{align}
+    z_{s}^{(k)}(t, 0)= & h_{s}^{\prime}(t) \frac{\partial G_{s}}{\partial h_{s}} \left(h_{s}(t), u_{1}^{(k-1)}(t, 0), \ldots, u_{m}^{(k-1)}(t, 0)\right)\nonumber                   \\
+                       & +\sum_{r=1}^{m} z_{r}^{(k-1)}(t, 0) \frac{\partial G_{s}}{\partial u_{r}}\left(h_{s}(t), u_{1}^{(k-1)}(t, 0), \ldots, u_{m}^{(k-1)}(t, 0)\right),\nonumber \\
+                       & \quad \forall s=m+1, \ldots, n .\label{B44}
+\end{align}
+由(\ref{A20}), (\ref{A27}), (\ref{A29}) 和 (\ref{B21})
+\begin{equation} \label{B45}
+    \sup _{t}\left|z_{r}^{(k)}(t, L)\right| \leq \varepsilon(1+C \varepsilon)+\alpha_{0} C_{P} \varepsilon \leq \alpha_{1} C_{P} \varepsilon, \quad \forall r=1, \ldots, m.
+\end{equation}
+和
+\begin{equation}\label{B46}
+    \sup _{t}\left|z_{s}^{(k)}(t, 0)\right| \leq \alpha_{1} C_{P} \varepsilon, \quad \forall s=m+1, \ldots, n.
+\end{equation}
+为了进一步得到内部的估计,我们对方程(\ref{B31}) 和 (\ref{B33})对时间求导, 得到
+\begin{align}
+      & \partial_{x} z_{r}^{(k)}+\mu_{r}^{(k-1)} \partial_{t} z_{r}^{(k)}\nonumber                                                                                                                      \\
+    = & -\left(\nabla_{u} \mu_{r}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} \mu _{r} ^{(k-1)}\right) z_{r}^{(k)}\nonumber                                                                    \\
+      & +\sum_{j=1}^{n} B_{r j}^{(k-1)}\left(\nabla_{u} \mu_{r}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} \mu _{r} ^{(k-1)}\right) \partial_{t} u_{j}^{(k-1)}\nonumber                       \\
+      & +\sum_{j=1}^{n}\left(\nabla_{u} B_{r j}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial_{t} B_{rj}^{(k-1)}\right)\left(\partial_{x}+\mu_{r}^{(k-1)} \partial_{t} \right) u_{j}^{(k-1)}\nonumber \\
+      & +\sum_{j=1}^{n}\left(\partial_{x}+\mu_{r}^{(k-1)} \partial_{t}\right)\left(B_{r j}^{(k-1)} \partial_{t} u_{j}^{(k-1)}\right) \nonumber                                                          \\
+      & -\sum_{j=1}^{n}\left(\nabla_{u} B_{r j}^{(k-1)} \cdot\left(\partial_{x}+\mu_{r}^{(k-1)} \partial_{t}\right) u^{(k-1)}\right) \partial_{t} u_{j}^{(k-1)}\nonumber                                \\
+      & -\sum_{j=1}^{n}\left(\partial_{x}B_{r j}^{(k-1)}+\mu_{r}^{(k-1)} \partial_{t}B_{r j}^{(k-1)} \right) \partial_{t} u_{j}^{(k-1)}\nonumber                                                        \\
+      & +\kappa \sum_{j=1}^{n}\left(\nabla_{u} C_{r j}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial_{t} C_{r j}^{(k-1)}\right) \mu_{r}^{(k-1)} F_j^{(k-1)}\nonumber                                  \\
+      & +\kappa \sum_{j=1}^{n} C_{r j}^{(k-1)}\left(\nabla_{u} \mu_{r}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} \mu _{r} ^{(k-1)}\right) F_j^{(k-1)}\nonumber                               \\
+      & +\kappa \sum_{j=1}^{n} C_{r j}^{(k-1)}\mu_{r}^{(k-1)} \left(\nabla_{u} F_{j}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} F_{j} ^{(k-1)}\right)
+    , r=1, \ldots, m, \label{B47}
+\end{align}
+\begin{align}
+      & \partial_{x} z_{s}^{(k)}+\mu_{s}^{(k-1)} \partial_{t} z_{s}^{(k)}\nonumber                                                                                                                      \\
+    = & -\left(\nabla_{u} \mu_{s}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} \mu _{s} ^{(k-1)}\right) z_{s}^{(k)}\nonumber                                                                    \\
+      & +\sum_{j=1}^{n} B_{s j}^{(k-1)}\left(\nabla_{u} \mu_{s}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} \mu _{s} ^{(k-1)}\right) \partial_{t} u_{j}^{(k-1)}\nonumber                       \\
+      & +\sum_{j=1}^{n}\left(\nabla_{u} B_{s j}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial_{t} B_{sj}^{(k-1)}\right)\left(\partial_{x}+\mu_{s}^{(k-1)} \partial_{t} \right) u_{j}^{(k-1)}\nonumber \\
+      & +\sum_{j=1}^{n}\left(\partial_{x}+\mu_{s}^{(k-1)} \partial_{t}\right)\left(B_{s j}^{(k-1)} \partial_{t} u_{j}^{(k-1)}\right)\nonumber                                                           \\
+      & -\sum_{j=1}^{n}\left(\nabla_{u} B_{s j}^{(k-1)} \cdot\left(\partial_{x}+\mu_{s}^{(k-1)} \partial_{t}\right) u^{(k-1)}\right) \partial_{t} u_{j}^{(k-1)}\nonumber                                \\
+      & -\sum_{j=1}^{n}\left(\partial_{x}B_{s j}^{(k-1)}+\mu_{s}^{(k-1)} \partial_{t}B_{s j}^{(k-1)} \right) \partial_{t} u_{j}^{(k-1)}\nonumber                                                        \\
+      & +\kappa \sum_{j=1}^{n}\left(\nabla_{u} C_{s j}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial_{t} C_{s j}^{(k-1)}\right) \mu_{s}^{(k-1)} F_j^{(k-1)}\nonumber                                  \\
+      & +\kappa \sum_{j=1}^{n} C_{s j}^{(k-1)}\left(\nabla_{u} \mu_{s}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} \mu _{s} ^{(k-1)}\right) F_j^{(k-1)}\nonumber                               \\
+      & +\kappa \sum_{j=1}^{n} C_{s j}^{(k-1)}\mu_{s}^{(k-1)} \left(\nabla_{u} F_{j}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} F_{j} ^{(k-1)}\right)
+    , s=m+1, \ldots, n .\label{B48}
+\end{align}
+沿着相应的特征曲线$t=t_{s}^{(k)}\left(x ; t_{*}, 0\right)$对(\ref{B47})积分, 由(\ref{B4}),(\ref{A7}), 我们有
+\begin{align}
+     & \left|z_{s}^{(k)}  \left(t_{s}^{(k)}\left(x ; t_{*}, 0\right), x\right)-z_{s}^{(k)}\left(t_{*}, 0\right)\right|\nonumber                                                                                                                                                                                                                               \\
+     & \leq  \sup _{u \in \mathcal{U}} \left( \left\|\nabla_{u} \mu_{s}\right\| \left\|u^{(k-1)}\right\|_{C^{1}}  + \kappa \left\| \partial_{t} \partial_{\kappa }  \mu_{s}\right\| \right) \int_{0}^{x}\left|z_{s}^{(k)}\left(t_{s}^{(k)}\left(y ; t_{*}, 0\right), y\right)\right| \mathrm{d} y\nonumber                                                    \\
+     & +L \sum_{j=1}^{n} \sup _{u \in \mathcal{U}} \left( \left\|\nabla_{u} B_{s j}\right\| \left\| u^{(k-1)}\right\|_{C^{1}} + \kappa \left\| \partial_{t} \partial_{\kappa }  B_{s j}\right\| \right) \left(\left\|\partial_{x} u^{(k-1)}\right\|_{C^{0}}+\mu_{\max }\left\|\partial_{t} u^{(k-1)}\right\|_{C^{0}}\right)\nonumber                          \\
+     & +L \sum_{j=1}^{n}\left\|u^{(k-1)}\right\|_{C^{0}}\sup _{u \in \mathcal{U}}\left\|\nabla_{u} B_{s j}\right\| \sup _{u \in \mathcal{U}}\left(\left\|\nabla_{u} \mu_{s}\right\| \left\| u^{(k-1)}\right\|_{C^{1}} + \kappa \left\|\partial_{t} \partial_{\kappa }\mu_{s}\right\|\right)  \left\| u^{(k-1)}\right\|_{C^{1}}\nonumber                       \\
+     & +2 \sum_{j=1}^{n} \sup _{u \in \mathcal{U}}\left( \left\|\nabla_{u} B_{s j}\right\|\left\|u^{(k-1)}\right\|_{C^{0}} + \kappa \left\| \partial_{\kappa } B_{sj} \right\| \right) \left\|\partial_{t} u^{(k-1)}\right\|_{C^{0}}\nonumber                                                                                                                 \\
+     & +\kappa L \sum_{j=1}^{n} \sup _{u \in \mathcal{U}} \left( \left\|\partial_{\kappa } \partial_{x} B_{s j}\right\| + \mu _{max}\left\| \partial_{t} \partial_{\kappa } B_{s j}\right\| \right) \left\| u^{(k-1)}\right\|_{C^{0}}\nonumber                                                                                                                \\
+     & +L \sum_{j=1}^{n} \sup _{u \in \mathcal{U}}\left\|\nabla_{u} B_{s j}\right\|\left(\left\|\partial_{x} u^{(k-1)}\right\|_{C^{0}}+\mu_{\max }\left\|\partial_{t} u^{(k-1)}\right\|_{C^{0}}\right)\left\|\partial_{t} u^{(k-1)}\right\|_{C^{0}},\nonumber                                                                                                 \\
+     & +\kappa  \mu_{max} L \sum_{j=1}^{n} \sup _{u \in \mathcal{U}} \left( \left\|\nabla_{u} C_{s j} \right\| \left\|u^{(k-1)}\right\|_{C^{1}} +\kappa  \left\| \partial_{t} \partial_{\kappa } C_{s j} \right\|\right)  \sup _{u \in \mathcal{U}} \left\|\nabla_{u} F_{j}\right\| \left\| u^{(k-1)}\right\|_{C^{0}}\nonumber                                \\
+     & +\kappa  L \sum_{j=1}^{n} \sup _{u \in \mathcal{U}}\left\| C_{s j}\right\| \sup _{u \in \mathcal{U}} \left( \left\|\nabla_{u} \mu_{s}\right\| \left\|u^{(k-1)}\right\|_{C^{1}} + \left\| \partial_{t} \partial_{\kappa } \mu_{s}\right\| \right)  \sup _{u \in \mathcal{U}} \left\|\nabla_{u} F_{j}\right\| \left\| u^{(k-1)}\right\|_{C^{0}}\nonumber \\
+     & +\kappa \mu_{max} L \sum_{j=1}^{n} \sup _{u \in \mathcal{U}}\left\| C_{s j}\right\| \sup _{u \in \mathcal{U}} \left( \left\|\nabla_{u} F_{j}\right\| + \left\| \partial_{t} \nabla_{u} F_{j}\right\| \right)\left\|u^{(k-1)}\right\|_{C^{1}}\nonumber                                                                                                  \\
+     & \quad \forall x \in[0, L], \forall t_{*} \in \mathbb{R}, \forall s=m+1, \ldots, n .\label{B49}
+\end{align}
+由 (\ref{B21}), (\ref{B45})并应用 Gronwall不等式, 我们可以得到
+\begin{equation} \label{B50}
+    \left\|z_{s}^{(k)}\right\|_{C^{0}} \leq \alpha_{2} C_{P} \varepsilon, \quad \forall s=m+1, \ldots, n,
+\end{equation}
+对(\ref{B48})积分,我们有
+\begin{equation} \label{B51}
+    \left\|z_{r}^{(k)}\right\|_{C^{0}} \leq \alpha_{2} C_{P} \varepsilon, \quad \forall r=1, \ldots, m
+\end{equation}
+此外,由方程 (\ref{B31}) 和 (\ref{B33})对传播速度的基本假设 (\ref{A14}) , $B_{i j}$的性质(\ref{B3}),性质(\ref{A7})以及我们已知的估计(\ref{B21}) 和 (\ref{B50})--(\ref{B51}), 很容易得到
+\begin{equation} \label{B52}
+    \left\|\partial_{x} u_{i}^{(k)}\right\|_{C^{0}} \leq C_{P} \varepsilon, \quad \forall i=1, \ldots, n.
+\end{equation}
+结合上述估计 (\ref{B40})--(\ref{B41}) 和 (\ref{B50})--(\ref{B52}), 我们得到 $C^{1}$ 估计(\ref{B16}).
+
+接下来,我们证明序列的柯西性质(\ref{B17}). 对于 $k=1$, 由(\ref{B10}), 可以直接从 (\ref{B41})--(\ref{B42})中导出.对于$k \geq 2$, 我们首先注意到由 (\ref{B31}),在$x=L$上我们有
+\begin{align}
+     & u_{r}^{(k)}(t, L)-u_{r}^{(k-1)}(t, L)= \sum_{s=m+1}^{n}\left(u_{s}^{(k-1)}(t, L)-u_{s}^{(k-2)}(t, L)\right) \nonumber                                                      \\
+     & \quad \quad\quad \cdot \int_{0}^{1} \frac{\partial G_{r}}{\partial u_{s}}\left( h_{r}(t), \gamma u_{m+1}^{(k-1)}(t, L)+(1-\gamma) u_{m+1}^{(k-1)}(t, L),\right.  \nonumber \\
+     & \quad \quad \quad\quad\left.\ldots, \gamma u_{n}^{(k-1)}(t, L)+(1-\gamma) u_{n}^{(k-1)}(t, L)\right) \mathrm{d} \gamma, \quad \forall r=1, \ldots, m . \label{B53}
+\end{align}
+然后,根据 (\ref{B22}) 和 (\ref{B28}) 我们有
+\begin{equation} \label{B54}
+    \sup _{t}\left|u_{r}^{(k)}(t, L)-u_{r}^{(k-1)}(t, L)\right| \leq C_{P} \varepsilon \alpha^{k-1} \alpha_{0}, \quad \forall r=1, \ldots, m .
+\end{equation}
+同时, 方程(\ref{B31})满足
+\begin{align}
+      & \left(\partial_{x}+\mu_{r}^{(k-1)} \partial_{t}\right)\left(u_{r}^{(k)}-u_{r}^{(k-1)}\right)\nonumber                                              \\
+    = & -\left(\mu_{r}^{(k-1)}-\mu_{r}^{(k-2)}\right) \partial_{t} u_{r}^{(k-1)}\nonumber                                                                  \\
+      & +\sum_{j=1}^{n}\left(B_{r j}^{(k-1)}-B_{r j}^{(k-2)}\right)\left(\partial_{x}+\mu_{r}^{(k-1)} \partial_{t}\right) u_{j}^{(k-1)}\nonumber           \\
+      & +\sum_{j=1}^{n}\left(\partial_{x}+\mu_{r}^{(k-1)} \partial_{t}\right)\left(B_{r j}^{(k-2)}\left(u_{j}^{(k-1)}-u_{j}^{(k-2)}\right)\right)\nonumber \\
+      & -\sum_{j=1}^{n}\left(u_{j}^{(k-1)}-u_{j}^{(k-2)}\right)\left(\partial_{x}+\mu_{r}^{(k-1)} \partial_{t}\right) B_{r j}^{(k-2)}\nonumber             \\
+      & +\sum_{j=1}^{n} B_{r j}^{(k-2)}\left(\mu_{r}^{(k-1)}-\mu_{r}^{(k-2)}\right) \partial_{t} u_{j}^{(k-2)}\nonumber                                    \\
+      & +\kappa \sum_{j=1}^{n}\left( C_{r j}^{(k-1)}-C_{r j}^{(k-2)}\right)\mu_{r}^{(k-1)}F_j^{(k-1)}\nonumber                                             \\
+      & +\kappa \sum_{j=1}^{n} C_{r j}^{(k-2)}\left(\mu_{r}^{(k-1)} - \mu_{r}^{(k-2)}\right) F_j^{(k-1)}\nonumber                                          \\
+      & +\kappa \sum_{j=1}^{n} C_{r j}^{(k-2)}\mu_{r}^{(k-2)} \left(F_j^{(k-1)}-F_j^{(k-2)} \right), \quad r=1, \ldots, m .\label{B55}
+\end{align}
+然后我们可以沿着相应的特征曲线$t=t_{r}^{(k)}\left(x ; t_{*}, L\right)$对(\ref{B55})积分得到
+\begin{align}
+     & \quad\left|u_{r}^{(k)}\left(t_{r}^{(k)}\left(x ; t_{*}, L\right), x\right)-u_{r}^{(k-1)}\left(t_{r}^{(k)}\left(x ; t_{*}, L\right), x\right)\right| \nonumber                                                                                                                                                                                 \\
+     & \leq\left|u_{r}^{(k)}\left(t_{*}, L\right)-u_{r}^{(k-1)}\left(t_{*}, L\right)\right|\nonumber                                                                                                                                                                                                                                                 \\
+     & \quad+L \sup _{u \in \mathcal{U}}\left\|\nabla_{u} \mu_{r}\right\|\left\|u^{(k-1)}-u^{(k-2)}\right\|_{C^{0}}\left\|\partial_{t} u^{(k-1)}\right\|_{C^{0}}\nonumber                                                                                                                                                                            \\
+     & \quad+L \sum_{j=1}^{n} \sup _{u \in \mathcal{U}}\left\|\nabla_{u} B_{r j}\right\|\left\|u^{(k-1)}-u^{(k-2)}\right\|_{C^{0}}\left(\left\|\partial_{x} u^{(k-1)}\right\|_{C^{0}}+\mu_{\max }\left\|\partial_{t} u^{(k-1)}\right\|_{C^{0}}\right)\nonumber                                                                                       \\
+     & \quad+2 \sum_{j=1}^{n} \sup _{u \in \mathcal{U}}\left( \left\|\nabla_{u} B_{r j}\right\|\left\|u^{(k-2)}\right\|_{C^{0}} + \kappa \left\| \partial_{\kappa }B_{rj} \right\|\right) \left\|u^{(k-1)}-u^{(k-2)}\right\|_{C^{0}}\nonumber                                                                                                        \\
+     & \quad+L \sum_{j=1}^{n}\left\|u^{(k-1)}-u^{(k-2)}\right\|_{C^{0}} \sup _{u \in \mathcal{U}}  \left\|\nabla_{u} B_{r j}\right\|  \left(\left\|\partial_{x} u^{(k-2)}\right\|_{C^{0}}+\mu_{\max }\left\|\partial_{t} u^{(k-2)}\right\|_{C^{0}}\right)\nonumber                                                                                   \\
+     & \quad+\kappa L \sum_{j=1}^{n}\left\|u^{(k-1)}-u^{(k-2)}\right\|_{C^{0}} \sup _{u \in \mathcal{U}} \left( \left\| \partial_t \partial_{\kappa } B_{r j}\right\| + \left\| \partial_x \partial_{\kappa } B_{r j}\right\| \right)\left\| u^{(k-2)}\right\|_{C^{0}}\nonumber                                                                      \\
+     & \quad+L \sum_{j=1}^{n} \sup _{u \in \mathcal{U}}\left( \left\|\nabla_{u} B_{r j}\right\|\left\|u^{(k-2)}\right\|_{C^{0}} + \kappa \left\| \partial_{\kappa }B_{rj} \right\|\right) \sup _{u \in \mathcal{U}}\left\|\nabla_{u} \mu_{r}\right\|\left\|u^{(k-1)}-u^{(k-2)}\right\|_{C^{0}}\left\|\partial_{t} u^{(k-2)}\right\|_{C^{0}}\nonumber \\
+     & \quad+\kappa L \mu_{max} \sum_{j=1}^{n}\sup _{u \in \mathcal{U}}\left\|\nabla_{u} C_{r j}\right\|\left\|u^{(k-1)}-u^{(k-2)}\right\|_{C^{0}} \sup _{u \in \mathcal{U}} \left\|\nabla_{u} F_{j}\right\| \left\| u^{(k-1)}\right\|_{C^{0}}\nonumber                                                                                              \\
+     & \quad+\kappa L \sum_{j=1}^{n}\sup _{u \in \mathcal{U}} \left\|C_{r j}\right\|\sup _{u \in \mathcal{U}}\left\|\nabla_{u} \mu_{r}\right\|\left\|u^{(k-1)}-u^{(k-2)}\right\|_{C^{0}} \sup _{u \in \mathcal{U}} \left\|\nabla_{u} F_{j}\right\| \left\| u^{(k-1)}\right\|_{C^{0}}\nonumber                                                        \\
+     & \quad+\kappa L \mu_{max} \sum_{j=1}^{n}\sup _{u \in \mathcal{U}} \left\|C_{r j}\right\|\sup _{u \in \mathcal{U}} \left\|\nabla_{u} F_{j}\right\|\left\|u^{(k-1)}-u^{(k-2)}\right\|_{C^{0}}\nonumber                                                                                                                                           \\
+     & \quad \forall x \in[0, L], \forall t_{*} \in \mathbb{R}, \forall r=1, \ldots, m .\label{B56}
+\end{align}
+然后,利用 (\ref{B21})--(\ref{B22}) 和 (\ref{B54})得到
+\begin{align}
+    \left|u_{r}^{(k)}(t, x)-u_{r}^{(k-1)}(t, x)\right|  \leq & C_{P} \varepsilon \alpha^{k-1} \alpha_{0}+C\left(C_{P} \varepsilon\right)^{2} \alpha^{k-1}+\kappa \left(C \left(C_{P}\varepsilon \right)^2 \alpha ^{k-1} + C C_{P}\varepsilon \alpha ^{k-1}\right),\nonumber \\
+                                                             & \forall(t, x) \in \mathbb{R} \times[0, L], \forall r=1, \ldots, m, \label{B57}
+\end{align}
+这里 $C$ 是一个独立于 $k$的常数.我们可以选择足够小的 $\varepsilon_{1}>0$与 $\kappa >0$ 使得
+\begin{equation} \label{B58}
+    C C_{P} \varepsilon +\kappa CC_{P}\varepsilon +\kappa C \leq \alpha-\alpha_{0}, \quad \forall k \in \mathbb{Z}_{+}.
+\end{equation}
+因此
+\begin{equation} \label{B59}
+    \left\|u_{r}^{(k)}-u_{r}^{(k-1)}\right\|_{C^{0}} \leq C_{P} \varepsilon \alpha^{k}, \quad \forall r=1, \ldots, m .
+\end{equation}
+同样,我们有
+\begin{equation} \label{B60}
+    \left\|u_{s}^{(k)}-u_{s}^{(k-1)}\right\|_{C^{0}} \leq C_{P} \varepsilon \alpha^{k}, \quad \forall s=m+1, \ldots, n .
+\end{equation}
+因此,我们得到(\ref{B17}).现在我们在时间方向上计算$z_{i}(i=1, \ldots, n)$的连续模(\ref{B18}),对于$\eta \in(0,1)$, 取
+\begin{equation} \label{B61}
+    \Omega_{P}(\eta)=20\left(\alpha_{1}-\alpha_{0}\right)^{-1} \sum_{i=1}^{n} \omega\left(\eta \mid h_{i}^{\prime}\right)+20 \eta,
+\end{equation}
+因为 $h_{i} \in C^{1}(\mathbb{R})$ , 我们有 $\lim_{\eta \rightarrow 0+} \Omega_{P}(\eta)=0$.
+对于任意满足 $\left|t_{1}-t_{2}\right| \leq \eta$的两点 $\left(t_{1}, L\right)$ 和 $\left(t_{2}, L\right)$ , 在边界 $x=L$上,由(\ref{B36}), 我们有
+\begin{align}
+      & z_{r}^{(k)}\left(t_{2}, L\right)-z_{r}^{(k)}\left(t_{1}, L\right)\nonumber                                                                                                                                                                                              \\
+    = & \left(h_{r}^{\prime}\left(t_{2}\right)-h_{r}^{\prime}\left(t_{1}\right)\right) \frac{\partial G_{r}}{\partial h_{r}}\left(h_{r}\left(t_{2}\right), u_{m+1}^{(k-1)}\left(t_{2}, L\right), \ldots, u_{n}^{(k-1)}\left(t_{2}, L\right)\right)\nonumber                     \\
+    + & h_{r}^{\prime}\left(t_{1}\right)\left(\frac{\partial G_{r}}{\partial h_{r}}\left(h_{r}\left(t_{2}\right), u_{m+1}^{(k-1)}\left(t_{2}, L\right), \ldots, u_{n}^{(k-1)}\left(t_{2}, L\right)\right)\right.\nonumber                                                       \\
+      & \left.-\frac{\partial G_{r}}{\partial h_{r}}\left(h_{r}\left(t_{1}\right), u_{m+1}^{(k-1)}\left(t_{1}, L\right), \ldots, u_{n}^{(k-1)}\left(t_{1}, L\right)\right)\right)\nonumber                                                                                      \\
+    + & \sum_{s=m+1}^{n}\left(z_{s}^{(k-1)}\left(t_{2}, L\right)-z_{s}^{(k-1)}\left(t_{1}, L\right)\right) \frac{\partial G_{r}}{\partial u_{s}}\left(h_{r}\left(t_{2}\right), u_{m+1}^{(k-1)}\left(t_{2}, L\right), \ldots, u_{n}^{(k-1)}\left(t_{2}, L\right)\right)\nonumber \\
+    + & \sum_{s=m+1}^{n} z_{s}^{(k-1)}\left(t_{1}, L\right)\left(\frac{\partial G_{r}}{\partial u_{s}}\left(h_{r}\left(t_{2}\right), u_{m+1}^{(k-1)}\left(t_{2}, L\right), \ldots, u_{n}^{(k-1)}\left(t_{2}, L\right)\right)\right.\nonumber                                    \\
+      & \left.\quad-\frac{\partial G_{r}}{\partial u_{s}}\left(h_{r}\left(t_{1}\right), u_{m+1}^{(k-1)}\left(t_{1}, L\right), \ldots, u_{n}^{(k-1)}\left(t_{1}, L\right)\right)\right), \quad r=1, \ldots, m .\label{B62}
+\end{align}
+因此
+\begin{align}
+    \left|z_{r}^{(k)}\left(t_{1}, L\right)-z_{r}^{(k)}\left(t_{2}, L\right)\right| \leq & \omega\left(\eta \mid h_{r}^{\prime}\right)\left(1+\sup _{u \in \mathcal{U}}\left|\nabla^{2} G_{r}\right| n C_{P} \varepsilon\right)+\varepsilon \sup _{u \in \mathcal{U}}\left|\nabla^{2} G_{r}\right| \cdot n C_{P} \varepsilon \eta \nonumber \\
+                                                                                        & +\frac{1}{8} \Omega_{P}(\eta) \alpha_{0}+C_{P} \varepsilon \sup _{u \in \mathcal{U}}\left|\nabla^{2} G_{r}\right| \cdot n^{2} C_{P} \varepsilon \eta,\nonumber                                                                                   \\&
+    \quad \forall r=1, \ldots, m .\label{B63}
+\end{align}
+取$\varepsilon_{1}>0$ 足够小,我们有
+\begin{equation} \label{B64}
+    \left|z_{r}^{(k)}\left(t_{1}, L\right)-z_{r}^{(k)}\left(t_{2}, L\right)\right| \leq \alpha_{1} \frac{1}{8} \Omega_{P}(\eta), \quad \forall r=1, \ldots, m.
+\end{equation}
+对于任意在区域中满足 $\left|t_{1}-t_{2}\right| \leq \eta$ 和 $x_{*} \in[0, L)$的两点 $\left(t_{1}, x_{*}\right)$ 和 $\left(t_{2}, x_{*}\right)$ ,根据定义(\ref{B35}), 我们有
+\begin{align}
+         & \left|t_{r}^{(k)}\left(x ; t_{1}, x_{*}\right)-t_{r}^{(k)}\left(x ; t_{2}, x_{*}\right)\right|\nonumber                                                                                                                        \\
+    \leq & \left|t_{1}-t_{2}\right|+\left|\int_{x_{*}}^{x} \mu_{r}\left(t_{r}^{(k)}\left(y ; t_{1}, x_{*}\right), y,u^{(k-1)}\left(t_{r}^{(k)}\left(y ; t_{1}, x_{*}\right), y\right)\right) \right.\nonumber                             \\
+         & \left. -\mu_{r}\left(t_{r}^{(k)}\left(y ; t_{1}, x_{*}\right), y,u^{(k-1)}\left(t_{r}^{(k)}\left(y ; t_{2}, x_{*}\right), y\right)\right) \mathrm{d} y\right| \nonumber                                                        \\
+    \leq & \left|t_{1}-t_{2}\right|+\int_{x_{*}}^{x} \left|t_{r}^{(k)}\left(y ; t_{1}, x_{*}\right)-t_{r}^{(k)}\left(y ; t_{2}, x_{*}\right) \right|\nonumber                                                                             \\
+         & \left| \int_{0}^{1}\left(\nabla_{u} \mu_{r}\left(\gamma t_{r}^{(k)}\left(y ; t_{1}, x_{*}\right)+(1-\gamma) t_{r}^{(k)}\left(y ; t_{2}, x_{*}\right), y,u^{(k-1)}\right) \cdot \partial_{t} u^{(k-1)}  \right.\right.\nonumber \\
+         & +  \partial_{t} \mu_{r}\left(\gamma t_{r}^{(k)}\left(y ; t_{1}, x_{*}\right)+(1-\gamma) t_{r}^{(k)}\left(y ; t_{2}, x_{*}\right),y,u^{(k-1)}\right)\left(\gamma t_{r}^{(k)}\left(y ; t_{1}, x_{*}\right) \right.\nonumber      \\
+         & \quad\quad\quad\quad +\left.\left. (1-\gamma) t_{r}^{(k)}\left(y ; t_{2}, x_{*}\right), y\right) \mathrm{d} \gamma \right|\mathrm{d} y , \quad \forall r=1, \ldots, m .\label{B65}
+\end{align}
+由Gronwall不等式,(\ref{B21}), 我们有
+\begin{align}
+    \left|t_{r}^{(k)}\left(x ; t_{1}, x_{*}\right)-t_{r}^{(k)}\left(x ; t_{2}, x_{*}\right)\right| & \leq\left|t_{1}-t_{2}\right| \mathrm{e}^{\left|x-x_{*}\right| \sup _{u \in \mathcal{U}}(C_{P} \varepsilon\left\|\nabla_{u} \mu_{r}\right\|+ \kappa  \left\|\partial _{t} \partial _{\kappa } \mu_{r}\right\|)}\nonumber \\
+                                                                                                   & \leq \eta\left(1+C C_{P} \varepsilon + \kappa C\right),\nonumber                                                                                                                                                        \\& \quad \forall x \in[0, L], \forall r=1, \ldots, m . \label{B66}
+\end{align}
+然后我们可以沿着$t=t_{r}^{(k)}\left(x ; t_{1}, x_{*}\right)$ 和 $t=t_{r}^{(k)}\left(x ; t_{2}, x_{*}\right)$ 积分 ,得到
+\begin{align}
+      & z_{r}^{(k)}\left(t_{2}, x_{*}\right)-z_{r}^{(k)}\left(t_{1}, x_{*}\right)\nonumber                                                                                                                                                                                                                                                  \\
+    = & z_{r}^{(k)}\left(t_{r}^{(k)}\left(L ; t_{2}, x_{*}\right), L\right)-z_{r}^{(k)}\left(t_{r}^{(k)}\left(L ; t_{1}, x_{*}\right), L\right)\nonumber                                                                                                                                                                                    \\
+      & +\int_{L}^{x_{*}}-\left.\left(\nabla_{u} \mu_{r}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial_{t}\mu_{r}^{(k-1)} \right) z_{r}^{(k)}\right|_{\left(t_{r}^{(k)}\left(x ; t_{1}, x_{*}\right), x_{*}\right)} ^{\left(t_{r}^{(k)}\left(x ; t_{2}, x_{*}\right), x_{*}\right)} \mathrm{d} x\nonumber                                 \\
+      & +\int_{L}^{x_{*}} \sum_{j=1}^{n}\left(B_{r j}^{(k-1)}\left(\nabla_{u} \mu_{r}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial_{t}\mu_{r}^{(k-1)} \right) \partial_{t} u_{j}^{(k-1)}\right.\nonumber                                                                                                                                 \\
+      & +\left(\nabla_{u} B_{r j}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial_{t}B_{r j}^{(k-1)}\right)\left(\partial_{x}+\mu_{r}^{(k-1)} \partial_{t}\right) u_{j}^{(k-1)}\nonumber                                                                                                                                                    \\
+      & -\left(\partial_{x}B_{r j}^{(k-1)} +\mu_{r}^{(k-1)} \partial_{t}B_{r j}^{(k-1)}  \right) \partial_{t} u_{j}^{(k-1)}\nonumber                                                                                                                                                                                                        \\
+      & \left.-\left(\nabla_{u} B_{r j}^{(k-1)} \cdot\left(\partial_{x}+\mu_{r}^{(k-1)} \partial_{t}\right) u^{(k-1)}\right) \partial_{t} u_{j}^{(k-1)}\right)\left.\right|_{\left(t_{r}^{(k)}\left(x ; t_{1}, x_{*}\right), x\right)} ^{\left(t_{r}^{(k)}\left(x ; t_{2}, x_{*}\right), x\right)} \mathrm{d} x\nonumber                    \\
+      & +\left.\left(B_{r j}^{(k-1)} \partial_{t} u_{j}^{(k-1)}\right)\right|_{\left(t_{1}, x_{*}\right)} ^{\left(t_{2}, x_{*}\right)}-\left.\left(B_{r j}^{(k-1)} \partial_{t} u_{j}^{(k-1)}\right)\right|_{\left(t_{r}^{(k)}\left(L ; t_{1}, x_{*}\right), L\right)} ^{\left(t_{r}^{(k)}\left(L ; t_{2}, x_{*}\right), L\right)}\nonumber \\
+      & +\kappa \int_{L}^{x_{*}}\sum_{j=1}^{n}\left(\left(\nabla C_{r j}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial_{t} C_{r j}^{(k-1)}\right) \mu_{r}^{(k-1)} F_j^{(k-1)} \right.\nonumber                                                                                                                                            \\
+      & + C_{r j}^{(k-1)}\left(\nabla \mu_{r}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} \mu _{r} ^{(k-1)}\right) F_j^{(k-1)}\nonumber                                                                                                                                                                                            \\
+      & + \left. \left.C_{r j}^{(k-1)}\mu_{r}^{(k-1)} \left(\nabla F_{j}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} F_{j} ^{(k-1)}\right)\right) \right|_{\left(t_{r}^{(k)}\left(x ; t_{1}, x_{*}\right), x\right)} ^{\left(t_{r}^{(k)}\left(x ; t_{2}, x_{*}\right), x\right)} \mathrm{d} x,\nonumber                            \\& \quad r=1, \ldots, m .\label{B67}
+\end{align}
+由Gronwall不等式, (\ref{B64})--(\ref{B66}), (\ref{B21}) 和 (\ref{B23}),我们有
+\begin{equation} \label{B68}
+    \omega\left(\eta \mid z_{r}^{(k)}(\cdot, x)\right) \leq \frac{1}{8} \Omega_{P}(\eta), \quad \forall x \in[0, L], \forall r=1, \ldots, m.
+\end{equation}
+对 $z_{s}^{(k)}$ 类似分析得到
+\begin{equation} \label{B69}
+    \omega\left(\eta \mid z_{s}^{(k)}(\cdot, x)\right) \leq \frac{1}{8} \Omega_{P}(\eta), \quad \forall x \in[0, L], \forall s=m+1, \ldots, n .
+\end{equation}
+进而证明了(\ref{B23}).
+
+接下来,为了证明 (\ref{B24}), 我们首先讨论两个特别的点 $\left(t_{1}, x_{1}\right)$ 和 $\left(t_{2}, x_{2}\right)$满足
+\begin{equation} \label{B70}
+    \left|t_{1}-t_{2}\right| \leq \eta,\left|x_{1}-x_{2}\right| \leq \eta,
+\end{equation}
+这两点位于相同的特征曲线 $t=t_{r}^{(k)}\left(x ; t_{*}, x_{*}\right)$上, 即 $t_{2}=t_{r}^{(k)}\left(x_{2} ; t_{1}, x_{1}\right)$. 在这种情况下,我们可以沿着 $t=t_{r}^{(k)}\left(x ; t_{1}, x_{1}\right)$积分,得到
+\begin{align}
+      & z_{r}^{(k)}\left(t_{2}, x_{2}\right)-z_{r}^{(k)}\left(t_{1}, x_{1}\right)\nonumber                                                                                                                                                   \\
+    = & \int_{x_{1}}^{x_{2}}-\left(\nabla_{u} \mu_{r}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} \mu _{r} ^{(k-1)}\right) z_{r}^{(k)}\nonumber                                                                                     \\
+      & +\sum_{j=1}^{n} B_{r j}^{(k-1)}\left(\nabla_{u} \mu_{r}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} \mu _{r} ^{(k-1)}\right) \partial_{t} u_{j}^{(k-1)}\nonumber                                                            \\
+      & +\sum_{j=1}^{n}\left(\nabla_{u} B_{r j}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial_{t} B_{rj}^{(k-1)}\right)\left(\partial_{x}+\mu_{r}^{(k-1)} \partial_{t} \right) u_{j}^{(k-1)} \nonumber                                     \\
+      & -\sum_{j=1}^{n}\left(\nabla_{u} B_{r j}^{(k-1)} \cdot\left(\partial_{x}+\mu_{r}^{(k-1)} \partial_{t}\right) u^{(k-1)}\right) \partial_{t} u_{j}^{(k-1)}\nonumber                                                                     \\
+      & -\sum_{j=1}^{n}\left(\partial_{x}B_{r j}^{(k-1)}+\mu_{r}^{(k-1)} \partial_{t}B_{r j}^{(k-1)} \right) \partial_{t} u_{j}^{(k-1)}\nonumber                                                                                             \\
+      & +\kappa \sum_{j=1}^{n}\left(\nabla_{u} C_{r j}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial_{t} C_{r j}^{(k-1)}\right) \mu_{r}^{(k-1)} F_j^{(k-1)}\nonumber                                                                       \\
+      & +\kappa \sum_{j=1}^{n} C_{r j}^{(k-1)}\left(\nabla_{u} \mu_{r}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} \mu _{r} ^{(k-1)}\right) F_j^{(k-1)} \nonumber                                                                   \\
+      & +\kappa \sum_{j=1}^{n} C_{r j}^{(k-1)}\mu_{r}^{(k-1)} \left(\nabla_{u} F_{j}^{(k-1)} \cdot \partial_{t} u^{(k-1)} + \partial _{t} F_{j} ^{(k-1)}\right)\left(t_{r}^{(k)}\left(x ; t_{1}, x_{1}\right), x\right)\mathrm{d} x\nonumber \\
+    + & \sum_{j=1}^{n}\left(B_{r j}\left(t_{2}, x_{2},u^{(k-1)}\left(t_{2}, x_{2}\right)\right)-B_{r j}\left(t_{1}, x_{1},u^{(k-1)}\left(t_{1}, x_{1}\right)\right)\right) \partial_{t} u_{j}^{(k-1)}\left(t_{2}, x_{2}\right)\nonumber      \\
+    + & \sum_{j=1}^{n} B_{r j}\left(t_{1}, x_{1},u^{(k-1)}\left(t_{1}, x_{1}\right)\right)\left(\partial_{t} u_{j}^{(k-1)}\left(t_{2}, x_{2}\right)-\partial_{t} u_{j}^{(k-1)}\left(t_{1}, x_{1}\right)\right),\nonumber                     \\& \quad r=1, \ldots, m .\label{B71}
+\end{align}
+因此, 由(\ref{B4}), (\ref{B16}), (\ref{B21}) 和 (\ref{B24}) 得到
+\begin{equation} \label{B72}
+    \left|z_{r}^{(k)}\left(t_{2}, x_{2}\right)-z_{r}^{(k)}\left(t_{1}, x_{1}\right)\right| \leq C \varepsilon^{2} \eta+C \varepsilon \Omega_{P}(\eta) \leq C \varepsilon \Omega_{P}(\eta), \quad \forall r=1, \ldots, m .
+\end{equation}
+然后,对于一般的两点 $\left(t_{1}, x_{1}\right)$ 和 $\left(t_{2}, x_{2}\right)$ 满足$\left|t_{1}-t_{2}\right| \leq \eta,\left|x_{1}-x_{2}\right| \leq \eta$, 我们可以选择位于通过$\left(t_{1}, x_{1}\right)$的第$r$个特征曲线上的一个点 $\left(t_{3}, x_{2}\right)$ ,即
+\begin{equation} \label{B73}
+    t_{3}=t_{r}^{(k)}\left(x_{2} ; t_{1}, x_{1}\right),
+\end{equation}
+由(\ref{A14}), 根据定义(\ref{B35}), 我们有
+\begin{equation} \label{B74}
+    \left|t_{3}-t_{1}\right| \leq\left|x_{2}-x_{1}\right| \leq \eta,
+\end{equation}
+因此
+\begin{equation} \label{B75}
+    \left|t_{3}-t_{2}\right| \leq 2 \eta,
+\end{equation}
+现在我们可以结合估计 (\ref{B68}),(\ref{B72}) 得到
+\begin{align}
+         & \left|z_{r}^{(k)}\left(t_{2}, x_{2}\right)-z_{r}^{(k)}\left(t_{1}, x_{1}\right)\right|\nonumber                                                                                                                        \\
+    \leq & \left|z_{r}^{(k)}\left(t_{2}, x_{2}\right)-z_{r}^{(k)}\left(\frac{t_{2}+t_{3}}{2}, x_{2}\right)\right|+\left|z_{r}^{(k)}\left(\frac{t_{2}+t_{3}}{2}, x_{2}\right)-z_{r}^{(k)}\left(t_{3}, x_{2}\right)\right|\nonumber \\
+         & \quad+\left|z_{r}^{(k)}\left(t_{3}, x_{2}\right)-z_{r}^{(k)}\left(t_{1}, x_{1}\right)\right|\nonumber                                                                                                                  \\
+    \leq & \frac{1}{4} \Omega_{P}(\eta)+C \varepsilon \Omega_{P}(\eta)\nonumber                                                                                                                                                   \\
+    \leq & \frac{1}{3} \Omega(\eta), \quad \forall r=1, \ldots, m,\label{B76}
+\end{align}
+得到
+\begin{equation} \label{B77}
+    \omega\left(\eta \mid z_{r}^{(k)}\right) \leq \frac{1}{3} \Omega_{P}(\eta), \quad \forall r=1, \ldots, m.
+\end{equation}
+类似地,我们有
+\begin{equation} \label{B78}
+    \omega\left(\eta \mid z_{s}^{(k)}\right) \leq \frac{1}{3} \Omega_{P}(\eta), \quad \forall s=m+1, \ldots, n.
+\end{equation}
+最后,由方程 (\ref{A26}), (\ref{B31}) 并注意到关于传播速度的基本假设 (\ref{A14}) , $B_{i j}$的性质(\ref{B4}), 以及我们已知的估计 (\ref{B16}), (\ref{B21}), (\ref{B24}),我们有
+\begin{equation} \label{B79}
+    \omega\left(\eta \mid \partial_{x} u_{i}^{(k)}\right) \leq \frac{1}{2} \Omega_{P}(\eta), \quad \forall i=1, \ldots, n.
+\end{equation}
+完成了 (\ref{B19})的证明和命题\ref{P1}的证明.
+
+\chapter{时间周期解的稳定性}
+
+在本章中,我们将证明定理\ref{T2}. 首先在$t \in [0 , T_0]$时,有
+\begin{equation} \label{C1}
+    \max \left\{\|u\|_{C^{1}},\left\|u^{(P)}\right\|_{C^{1}}\right\} \leq C \varepsilon.
+\end{equation}
+利用\cite{26}中类似的方法可以证明$\|u\|_{C^{1}}$有界,从而可以保证$u(t,x)$的全局存在性,由于该证明较长,这里不再赘述.为了递归地证明 (\ref{A32}) , 假设对某个 $t_{0} \geq 0$ 和 $N \in \mathbb{N}$,
+\begin{equation} \label{C2}
+    \max _{i=1, \ldots, n}\left\|u_{i}(t, \cdot)-u_{i}^{(P)}(t, \cdot)\right\|_{C^{0}} \leq C_{S} \varepsilon \alpha^{N}, \quad \forall t \in\left[t_{0}, t_{0}+T_{0}\right],
+\end{equation}
+我们将证明
+\begin{equation} \label{C3}
+    \max _{i=1, \ldots, n}\left\|u_{i}(t, \cdot)-u_{i}^{(P)}(t, \cdot)\right\|_{C^{0}} \leq C_{S} \varepsilon \alpha^{N+1}, \quad \forall t \in\left[t_{0}+T_{0}, t_{0}+2 T_{0}\right] .
+\end{equation}
+记
+\begin{equation} \label{C4}
+    \zeta(t)=\max _{i=1, \ldots, n} \sup _{x \in[0, L]}\left|u_{i}(t, x)-u_{i}^{(P)}(t, x)\right|,
+\end{equation}
+因为$\zeta(t)$ 是连续的,而
+\begin{equation} \label{C5}
+    \zeta\left(t_{0}+T_{0}\right) \leq C_{S} \varepsilon \alpha^{N},
+\end{equation}
+只需要证明
+\begin{equation} \label{C6}
+    \zeta(t) \leq C_{S} \varepsilon \alpha^{N+1}, \quad \forall t \in\left[t_{0}+T_{0}, \tau\right],
+\end{equation}
+即可.在这种假设下,对于给定的 $\tau \in\left[t_{0}+T_{0}, t_{0}+2 T_{0}\right]$,
+\begin{equation} \label{C7}
+    \zeta(t) \leq \frac{\alpha_{1}}{\alpha_{0}} C_{S} \varepsilon \alpha^{N}, \quad \forall t \in\left[t_{0}, \tau\right].
+\end{equation}
+这里$\alpha_{0}$ 和 $\alpha_{1}$ 是(\ref{B28})--(\ref{B29})中定义的常量.
+注意到 $u=u(t, x)$ 和 $u=u^{(P)}(t, x)$ 都是 $(\ref{A1})$的解, 左乘$l_{i}(t,x,u)$ 和 $l_{i}\left(t,x,u^{(P)}\right)$ $(i=1, \ldots, n)$ 后,我们可以将方程写为
+\begin{align}
+    (\partial_{t}+\lambda_i\partial_x)u_i
+     & = \sum_{j=1}^{n}B_{ij}(\partial_{t}+\lambda_i\partial_x)u_j + \kappa \sum_{j=1}^{n}C_{ij}F_j,\quad i=1, \ldots, n,  \label{C8}                                \\
+    (\partial_{t}+\lambda_i^{(P)}\partial_x)u_i^{(P)}
+     & = \sum_{j=1}^{n}B_{ij}^{(P)}(\partial_{t}+\lambda_i^{(P)}\partial_x)u_j^{(P)} + \kappa \sum_{j=1}^{n}C_{ij}^{(P)}F_j^{(P)}, \quad i=1, \ldots, n.  \label{C9}
+\end{align}
+这里$\lambda_i^{(P)}=\lambda_i(t,x,u^{(P)})$,其他记号同理.同时,由边界条件 (\ref{A16})--(\ref{A17}), 我们可以得出在 $x=L$上,
+\begin{equation} \nonumber
+    \begin{aligned}
+        u_{r}(t, L)-u_{r}^{(P)}(t, L)= & \sum_{s=m+1}^{n}\left(u_{s}(t, L)-u_{s}^{(P)}(t, L)\right) \cdot                                                              \\
+                                       & \int_{0}^{1} \frac{\partial G_{r}}{\partial u_{s}}\left(h_{r}(t), \gamma u_{m+1}(t, L)+(1-\gamma) u_{m+1}^{(P)}(t, L),\right.
+    \end{aligned}
+\end{equation}
+\begin{equation}\label{C11}
+    \left.\ldots, \gamma u_{n}(t, L)+(1-\gamma) u_{n}^{(P)}(t, L)\right) \mathrm{d} \gamma, \quad \forall r=1, \ldots, m.
+\end{equation}
+在$x=0$上,
+\begin{equation} \nonumber
+    \begin{aligned}
+        u_{s}(t, 0)-u_{s}^{(P)}(t, 0)= & \sum_{r=1}^{m}\left(u_{r}(t, 0)-u_{r}^{(P)}(t, 0)\right) \cdot                                                            \\
+                                       & \int_{0}^{1} \frac{\partial G_{s}}{\partial u_{r}}\left(h_{s}(t), \gamma u_{1}(t, 0)+(1-\gamma) u_{1}^{(P)}(t, 0),\right. \\
+    \end{aligned}
+\end{equation}
+\begin{equation}\label{C12}
+    \left.\ldots, \gamma u_{m}(t, 0)+(1-\gamma) u_{m}^{(P)}(t, 0)\right) \mathrm{d} \gamma, \quad \forall s=m+1, \ldots, n .
+\end{equation}
+因此,由(\ref{B28})和 (\ref{C7}), 我们有
+\begin{equation}\label{C13}
+    \max _{r=1, \ldots, m} \sup _{t \in\left[t_{0}, \tau\right]}\left|u_{r}(t, L)-u_{r}^{(P)}(t, L)\right| \leq \alpha_{1} C_{S} \varepsilon \alpha^{N}
+\end{equation}
+和
+\begin{equation}\label{C14}
+    \max _{s=m+1, \ldots, n} \sup _{t \in\left[t_{0}, \tau\right]}\left|u_{s}(t, 0)-u_{s}^{(P)}(t, 0)\right| \leq \alpha_{1} C_{S} \varepsilon \alpha^{N}
+\end{equation}
+在区域中, 由 (\ref{C8})--(\ref{C9})得到
+\begin{align}
+      & \left(\partial_{t}+\lambda_{i} \partial_{x}\right)\left(u_{i}-u_{i}^{(P)}\right)\nonumber                                                                                                                                    \\
+    = & \left(\partial_{t}+\lambda_{i} \partial_{x}\right) u_{i}-\left(\partial_{t}+\lambda_{i}^{(P)} \partial_{x}\right) u_{i}^{(P)}+\left(\lambda_{i}^{(P)}-\lambda_{i}\right) \partial_{x} u_{i}^{(P)}\nonumber                   \\
+    = & \left(\lambda_{i}^{(P)}-\lambda_{i}\right) \partial_{x} u_{i}^{(P)}+\sum_{j=1}^{n}\left(B_{i j}-B_{i j}^{(P)}\right)\left(\partial_{t}+\lambda_{i} \partial_{x}\right) u_{j}^{(P)}\nonumber                                  \\
+      & +\sum_{j=1}^{n} B_{i j}^{(P)}\left(\lambda_{i}-\lambda_{i}^{(P)}\right) \partial_{x} u_{j}^{(P)}+\sum_{j=1}^{n}\left(\partial_{t}+\lambda_{i} \partial_{x}\right)\left(B_{i j}\left(u_{j}-u_{j}^{(P)}\right)\right)\nonumber \\
+      & -\sum_{j=1}^{n}\left(\nabla_{u} B_{i j} \cdot\left(\partial_{t}+\lambda_{i} \partial_{x}\right) u\right)\left(u_{j}-u_{j}^{(P)}\right)\nonumber                                                                              \\
+      & - \sum_{j=1}^{n} \left(\partial_{t}B_{i j}+\lambda_{i} \partial_{x}B_{i j}\right)\left(u_{j}-u_{j}^{(P)}\right)\nonumber                                                                                                     \\
+      & + \kappa \sum_{j=1}^{n}\left(C_{i j}-C_{i j}^{(P)}\right)F_j\nonumber                                                                                                                                                        \\
+      & + \kappa \sum_{j=1}^{n}C_{i j}^{(P)}\left(F_j-F_j^{(P)}\right), \quad i=1, \ldots, n .\label{C15}
+\end{align}
+我们可以沿第$i$个特征曲线$x=x_{i}\left(t ; t_{*}, x_{*}\right)(i=1, \ldots, n)$ 积分,特征曲线为
+\begin{equation}\label{C16}
+    \left\{\begin{aligned}
+        \frac{\mathrm{d} x_{i}\left(t ; t_{*}, x_{*}\right)}{\mathrm{d} t} & =\lambda_{i}\left(u\left(x_{i}\left(t ; t_{*}, x_{*}\right), t\right)\right) \\
+        x_{i}\left(t_{*} ; t_{*}, x_{*}\right)                             & =x_{*} .
+    \end{aligned}\right.
+\end{equation}
+
+在这里,我们注意到,由于 (\ref{A34}), 通过每个点 $\left(t_{*}, x_{*}\right) \in\left[t_{0}+T_{0}, \tau\right] \times[0 . L]$, 向后特征曲线 $x=x_{i}\left(t ; t_{*}, x_{*}\right)$ 相交于 $t \in\left[t_{0}, \tau\right]$的边界 $x=0$ 或 $x=L$上, 因此,由 (\ref{C11})--(\ref{C12}) 和  (\ref{B4}), (\ref{C1}) 和 (\ref{C7}), 我们有
+\begin{equation}\label{C17}
+    \zeta(t) \leq \alpha_{1} C_{S} \varepsilon \alpha^{N}+C C_{S} \varepsilon^{2} \alpha^{N} + \kappa C C_{S} \varepsilon \alpha^{N}.
+\end{equation}
+对于足够小的 $\varepsilon_{2}>0$与$\kappa >0$, 即可得到我们所期望的结果
+\begin{equation}\label{C18}
+    \zeta(t) \leq C_{S} \varepsilon \alpha^{N+1}.
+\end{equation}
+从而定理\ref{T2}得证.
+
+此时,当$u(t,x)$为另一周期解时,利用定理\ref{T2},有
+\begin{equation}
+    |u(t,x)-u^{(P)}(t,x)|=\lim_{N \to \infty} |u(t+NT^{*},x)-u^{(P)}(t+NT^{*},x)| =0.
+\end{equation}
+从而证明了推论\ref{P3}.
+\chapter{应用举例}
+在前三章中,我们已经详细证明了关于非自治一阶拟线性双曲型方程组初边值问题时间周期解的存在性、唯一性、稳定性等定理.本章将以两个具体例子展示这些理论成果在实际应用中的重要性,并通过实例分析突显本文所取得成果的价值.我们将关注以下两个应用领域：
+\section{时间周期边界条件高频项的处理}
+对于\cite{24}中的问题
+\begin{equation}
+    \partial_{t} u+A(u) \partial_{x} u=0, \quad(t, x) \in \mathbb{R} \times[0, L].
+\end{equation}
+根据\cite{24}中的边界条件得出的周期解为$\tilde{u} (t,x)$.在生产中经常要考虑其高频部分的变化.考虑边界条件
+\begin{align}
+    x=0: u_{s} & =G_{s}\left(h_{s}(t), u_{1}, \ldots, u_{m}\right) + \kappa g_{s}\left(\tilde{h}_{s}(t), u_{1}, \ldots, u_{m}\right),   &  & s=m+1, \ldots, n, \\
+    x=L: u_{r} & =G_{r}\left(h_{r}(t), u_{m+1}, \ldots, u_{n}\right) + \kappa g_{r}\left(\tilde{h}_{r}(t), u_{1}, \ldots, u_{m}\right), &  & r=1, \ldots, m,
+\end{align}
+其中$G_{s}$, $G_{r}$的假设与\cite{24}中一致, $g_{s}$, $g_{r}$的假设与$G_{s}$, $G_{r}$相同, $\tilde{h}_{s}(t)$, $\tilde{h}_{r}(t)$的周期$\tilde{T}=\frac{1}{Z} T^{*}$,其中$Z$为某一大的正整数.记该问题的周期解为$u(t,x)$,两者之差$v(t,x)=u(t,x)-\tilde{u} (t,x)$.则$v(t,x)$满足
+\begin{equation}
+    \partial_{t} v+A(\tilde{u}+v) \partial_{x} v=\left(A(\tilde{u})- A(\tilde{u}+v) \right) \partial_{x}  \tilde{u}, \quad(t, x) \in \mathbb{R} \times[0, L].
+\end{equation}
+边界条件为
+\begin{align}
+    x=0: v_{s} & =\sum_{i=1}^{m} \int_{0}^{1} v_{i} \frac{\partial G_{s}}{\partial u_{i}}(h_{s}(t),\tilde{u}_{1}+\gamma v_{1},\ldots ,\tilde{u}_{m}+\gamma v_{m}) \mathrm{d}\gamma \nonumber       \\& + \kappa\sum_{i=1}^{m} \int_{0}^{1} v_{i} \frac{\partial g_{s}}{\partial u_{i}}(\tilde{h}_{s}(t),\tilde{u}_{1}+\gamma v_{1},\ldots ,\tilde{u}_{m}+\gamma v_{m}) \mathrm{d}\gamma  ,\nonumber \\ s&=m+1, \ldots, n, \\
+    x=L: v_{r} & =\sum_{i=m+1}^{n} \int_{0}^{1} v_{i} \frac{\partial G_{r}}{\partial u_{i}}(h_{s}(t),\tilde{u}_{m+1}+\gamma v_{m+1},\ldots ,\tilde{u}_{n}+\gamma v_{n}) \mathrm{d}\gamma \nonumber \\&+ \kappa \sum_{i=m+1}^{n} \int_{0}^{1} v_{i} \frac{\partial g_{r}}{\partial u_{i}}(\tilde{h}_{s}(t),\tilde{u}_{m+1}+\gamma v_{m+1},\ldots ,\tilde{u}_{n}+\gamma v_{n}) \mathrm{d}\gamma ,\nonumber \\r&=1, \ldots, m,
+\end{align}
+其中
+\begin{equation}
+    A(\tilde{u}+v)= A(v) + \int_{0}^{1} \tilde{u} \cdot \nabla A(\tau \tilde{u}+v) \mathrm{d}\tau
+\end{equation}
+由$\left\| \tilde{u} \right\|_{C^{1}} \leq C_{P} \varepsilon $以及定理\ref{T1}和定理\ref{T2}可知,线性化偏差量$v(t,x)$是一致有界的时间周期函数,因此\cite{24}所讨论的模型可以忽略足够小的该高频干扰项.
+\section{模型建立中的误差项处理}
+在实际应用中,模型建立过程可能存在不确定性和误差,这会对一阶拟线性双曲型方程组初边值问题的时间周期解造成影响.针对这一问题,我们可以运用本文所证明的定理进行误差项的处理.
+依然考虑\cite{24}中的模型,其经过扰动的解记为$u(t,x;\gamma )$,其满足的方程为
+\begin{equation} \label{D1}
+    \partial_{t} u+\left( A(u) + \gamma B(u) \right) \partial_{x} u=0, \quad(t, x) \in \mathbb{R} \times[0, L].
+\end{equation}
+边界条件为
+\begin{align}
+    x=0: u_{s} & =G_{s}\left(h_{s}(t) + \gamma H_{s}(t), u_{1}, \ldots, u_{m}\right),     &  & s=m+1, \ldots, n,  \label{D3} \\
+    x=L: u_{r} & =G_{r}\left(h_{r}(t) +  \gamma H_{r}(t), u_{m+1}, \ldots, u_{n}\right) , &  & r=1, \ldots, m,\label{D4}
+\end{align}
+其中$B(u)$,   $H_{s}(t)$,  $H_{r}(t)$ 为光滑函数, $\gamma $为小常数.我们假设 $u(t,x;\gamma )$关于$\gamma $光滑,记$\tilde{u}(t,x)=u(t,x;0)$.为了在简化情形下研究小偏差$|\gamma| \ll 1$对解$u(t,x;\gamma)$产生的影响,我们可以考虑
+\begin{equation}
+    v(t,x) = \left. \frac{\partial u}{\partial \gamma } \right|_{\gamma =0}.
+\end{equation}
+对(\ref{D1})关于$\gamma $求导,并取$\gamma=0$
+\begin{equation} \label{D2}
+    \partial_{t} v+A(\tilde{u})  \partial_{x} v=- \left(v \cdot \nabla A(\tilde{u})+B(\tilde{u}) \right) \tilde{u}_x, \quad(t, x) \in \mathbb{R} \times[0, L].
+\end{equation}
+对(\ref{D3}),(\ref{D4})关于$\gamma $求导,并取$\gamma=0$
+\begin{align}
+    x=0: v_{s} & =H_{s}(t) \frac{\partial G_{s}}{\partial h} \left(h_{s}(t), \tilde{u}_{1}, \ldots, \tilde{u}_{m}\right) + \sum_{i=1}^{m} v_{i} \frac{\partial G_{s}}{\partial u_{i} }\left(h_{s}(t), \tilde{u}_{1}, \ldots, \tilde{u}_{m}\right),\nonumber     \\& s=m+1, \ldots, n,  \label{D5} \\
+    x=L: v_{r} & =H_{r}(t)\frac{\partial G_{r}}{\partial h} \left(h_{r}(t), \tilde{u}_{m+1}, \ldots, \tilde{u}_{n}\right) + \sum_{i=m+1}^{n} v_{i} \frac{\partial G_{r}}{\partial u_{i}}\left(h_{r}(t), \tilde{u}_{m+1}, \ldots, \tilde{u}_{n}\right),\nonumber \\&r=1, \ldots, m,\label{D6}
+\end{align}
+其中
+\begin{equation}
+    A(\tilde{u})= A(0) + \int_{0}^{1} \tilde{u} \cdot \nabla A(\tau \tilde{u}) \mathrm{d}\tau .
+\end{equation}
+由$\left\| \tilde{u} \right\|_{C^{1}} \leq C_{P} \varepsilon $与$|\gamma| \ll 1$以及定理\ref{T1}和定理\ref{T2}可知,线性化偏差量$v(t,x)$是一致有界的时间周期函数,因此\cite{24}所讨论的模型对各类不确定性产生的误差是线性化稳定的.
+\chapter*{\heiti 致谢}
+在本论文的写作过程中,我深感到能够在复旦大学数学系度过这四年本科生涯是一份莫大的荣幸.在此,我要衷心感谢我的指导老师肖体俊老师和曲鹏老师.他们对我的论文给予了充分的指导和支持,使我能够顺利完成本论文的撰写.
+
+首先,我要特别感谢我的指导老师肖体俊老师.在整个论文写作过程中,肖体俊老师以严谨的治学态度和辛勤的教书育人精神,为我提供了极大的帮助.她不仅在学术上给予了我充分的指导,还为我提供了许多宝贵的人生建议.正是在肖体俊老师的关心和支持下,我得以度过了许多困难时期.在此,我要向肖体俊老师表示我最深切的感激.
+
+此外,我还要感谢曲鹏老师.曲鹏老师对论文的很多技术细节提出了许多宝贵的意见,使得我的论文得以更加完善.曲鹏老师的严谨治学和高度责任感,让我深受启发和教益.在此,我对曲鹏老师表示衷心的感谢.
+\footnotesize
+\begin{thebibliography}{99}
+    \bibitem{1} Georges Bastin, Jean-Michel Coron, Stability and Boundary Stabilization of 1-D Hyperbolic Systems, Progress in Nonlinear Differential Equations and Their Applications, vol. 88, Birkhäuser/Springer, 2016.
+    \bibitem{2} Georges Bastin, Jean-Michel Coron, Brigitte d'Andréa Novel, On Lyapunov stability of linearised Saint--Venant equations for a sloping channel, Netw. Heterog. Media 4 (2) (2009) 177--187.
+    \bibitem{3} Georges Bastin, Jean-Michel Coron, Amaury Hayat, Peipei Shang, Exponential boundary feedback stabilization of a shock steady state for the inviscid Burgers equation, Math. Models Methods Appl. Sci. 29 (2) (2019) 271--316.
+    \bibitem{4} Jean-Michel Coron, Georges Bastin, Dissipative boundary conditions for one-dimensional quasi-linear hyperbolic systems: Lyapunov stability for the C1-norm, SIAM J. Control Optim. 53 (3) (2015) 1464--1483.
+    \bibitem{5} Jean-Michel Coron, Georges Bastin, Brigitte d'Andréa Novel, Dissipative boundary conditions for one-dimensional nonlinear hyperbolic systems, SIAM J. Control Optim. 47 (3) (2008) 1460--1498.
+    \bibitem{6} Jean-Michel Coron, Brigitte d'Andréa Novel, Georges Bastin, A strict Lyapunov function for boundary control of hyperbolic systems of conservation laws, IEEE Trans. Autom. Control 52 (1) (2007) 2--11.
+    \bibitem{7} Jonathan de Halleux, Christophe Prieur, Jean-Michel Coron, Brigitte d'Andréa Novel, Georges Bastin, Boundary feedback control in network of open channels, Automatica 39 (8) (2003) 1365--1376.
+    \bibitem{8} James M. Greenberg, Ta-Tsien Li, The effffect of boundary damping for the quasilinear wave equation, J. Diffffer. Equ. 52 (1984) 66--75.
+    \bibitem{9} Martin Gugat, Boundary feedback stabilization of the telegraph equation: decay rates for vanishing damping term, Syst. Control Lett. 66 (2014) 72--84.
+    \bibitem{10} Martin Gugat, Günter Leugering, Ke Wang, Neumann boundary feedback stabilization for a nonlinear wave equation: a strict H2-Lyapunov function, Math. Control Relat. Fields 7 (3) (2017) 419--448.
+    \bibitem{11} Martin Gugat, Vincent Perrollaz, Lionel Rosier, Boundary stabilization of quasilinear hyperbolic systems of balance laws: exponential decay for small source terms, J. Evol. Equ. 18 (3) (2018) 1471--1500.
+    \bibitem{12} Long Hu, Sharp time estimates for exact boundary controllability of quasilinear hyperbolic systems, SIAM J. Control Optim. 53 (6) (2015) 3383--3410.
+    \bibitem{13} Long Hu, Rafael Vazquez, Florent Di Meglio, Miroslav Krstic, Boundary exponential stabilization of 1-dimensional inhomogeneous quasi-linear hyperbolic systems, SIAM J. Control Optim. 57 (2) (2019) 963--998.382 P. Qu / J. Math. Pures Appl. 139 (2020) 356--382
+    \bibitem{14} Ta-Tsien Li, Global Classical Solutions for Quasilinear Hyperbolic Systems, Research in Applied Mathematics, vol. 32, John Wiley \& Sons, 1994.
+    \bibitem{15} Ta-Tsien Li, Wenci Yu, Boundary Value Problems for Quasilinear Hyperbolic Systems, Duke University Mathematics Series, vol. V, Duke University, 1985.
+    \bibitem{16} Yanzhao Li, Cunming Liu, Asymptotic stability of equilibrium state to the mixed initial-boundary value problem for quasilinear hyperbolic systems, Chin. Ann. Math., Ser. B 36 (3) (2015) 323--344.
+    \bibitem{17}  Robert L. Pego, Some explicit resonating waves in weakly nonlinear gas dynamics, Stud. Appl. Math. 79 (3) (1988) 263--270.
+    \bibitem{18} Tiehu Qin, Global smooth solutions of dissipative boundary value problems for fifirst order quasilinear hyperbolic systems, Chin. Ann. Math., Ser. B 6 (1985) 289--298.
+    \bibitem{19} Blake Temple, Robin Young, Time-periodic linearized solutions of the compressible Euler equations and a problem of small divisors, SIAM J. Math. Anal. 43 (1) (2011) 1--49.
+    \bibitem{20} Libin Wang, Ke Wang, Asymptotic stability of the exact boundary controllability of nodal profifile for quasilinear hyperbolic systems, ESAIM Control Optim. Calc. Var. (2019), https://doi.org/10.1051/cocv/2019050.
+    \bibitem{21} Jinguo Yu, Yanchun Zhao, Regularity of solutions to first order quasilinear hyperbolic equations, Chin. Ann. Math., Ser.A 6 (5) (1985) 595--609.
+    \bibitem{22} Hairong Yuan, Time-periodic isentropic supersonic Euler flflows in one-dimensional ducts driving by periodic boundary conditions, Acta Math. Sci. Ser. B 39 (2) (2019) 1--10.
+    \bibitem{23} Yanchun Zhao, Classical Solutions for Quasilinear Hyperbolic Systems, Doctor thesis, Fudan University, Shanghai, 1986.
+    \bibitem{24} Peng Qu, Time-periodic solutions to quasilinear hyperbolic systems with time-periodic boundary conditions, Journal de Mathématiques Pures et Appliquées, Volume 139, 2020, Pages 356-382, ISSN 0021-7824.
+    \bibitem{25} Peng Qu, Huimin Yu, Xiaomin Zhang, Subsonic time-periodic solution to compressible Euler equations with damping in a bounded domain, Journal of Differential Equations, Volume 352, 2023, Pages 122-152, ISSN 0022-0396.
+    \bibitem{26} Peng Qu, Time-Periodic Solutions to Quasilinear Hyperbolic Systems on General Networks, to appear in Chinese Annals of Mathematics, Series B.
+\end{thebibliography}
+
+
+
+%\bibliographystyle{plain}
+%\bibliography{../ml}
+\end{document}
